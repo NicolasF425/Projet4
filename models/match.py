@@ -1,7 +1,8 @@
 class Match:
 
-    def __init__(self, Player1, Player1Score, Player2, Player2Score):
-        self.PlayersScores = ([Player1, Player1Score], [Player2, Player2Score])
+    def __init__(self, player1, player1_score, player2, player2_score):
+        self.PlayersScores = ([player1, player1_score],
+                              [player2, player2_score])
 
     def to_dict(self):
         return {

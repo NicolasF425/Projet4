@@ -5,12 +5,15 @@ class Tournament:
         self.name = name
         self.location = location
         self.start_date = start_date
-        self.end_date = ""
+        self.end_date = ""  # default value
         self.number_of_rounds = number_of_rounds
         self.round_number = 1
         self.players = []
         self.rounds = []
         self.description = description
+
+    def __repr__(self):
+        return f"Tournament({self.__dict__})"
 
     def add_player(self, player):
         self.players.append(player)

@@ -1,13 +1,26 @@
-from models.player import Player
-from models.match import Match
+# from models.player import Player
+# from utilities.players_manager import save_players, load_players
 
-from utilities.JSONfilesManager import to_file
+from controllers.player_controller import PlayerController as PC
+from views.player_view import AddPlayerView, ListPlayersView
 
+'''
+player1 = Player(nom="Nom1", prenom="Prenom1", date_de_naissance="12/12/2000",
+                 identifiant_club="AB12345")
+player2 = Player(nom="Nom2", prenom="Prenom2", date_de_naissance="15/10/2000",
+                 identifiant_club="AB12345")
 
-player1 = Player("Nom1", "Prenom1", "12/12/2000", "AB12345")
-player2 = Player("Nom2", "Prenom2", "15/10/2000", "AB12345")
+saved_players = [player1, player2]
 
-match = Match(player1, 1, player2, 0)
+save_players(saved_players, "joueurs.json")
 
+loaded_players = load_players("joueurs.json")
 
-to_file(match, "c:\\dev\\programmes\\Projet4\\match.json")
+for player in loaded_players:
+    player.print_player()
+'''
+
+# view = AddPlayerView()
+# view.add_new_player()
+view = ListPlayersView()
+view.list_players_by_name()

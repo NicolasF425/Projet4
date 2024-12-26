@@ -1,0 +1,26 @@
+[
+    {
+        "nom": "Nom1",
+        "prenom": "Prenom1",
+        "date_de_naissance": "12/12/2000",
+        "identifiant_club": "AB12345"
+    },
+    {
+        "nom": "Nom2",
+        "prenom": "Prenom2",
+        "date_de_naissance": "15/10/2000",
+        "identifiant_club": "AB12345"
+    },
+    {
+        "nom": "Fan",
+        "prenom": "Nic",
+        "date_de_naissance": "12/12/2015",
+        "identifiant_club": "AZ12345"
+    },
+    {
+        "nom": "Grandjean",
+        "prenom": "Christophe",
+        "date_de_naissance": "12/12/2001",
+        "identifiant_club": "AS56321"
+    }
+]
