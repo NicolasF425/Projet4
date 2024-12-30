@@ -23,7 +23,7 @@ class TournamentPlayer(Player):
     def __init__(self, **kwargs):
         for cle, valeur in kwargs.items():
             setattr(self, cle, valeur)
-        self.id_player = 0
+        self.id_joueur = 0
         self.score = 0
 
     def set_player_id(self, id):
@@ -31,12 +31,3 @@ class TournamentPlayer(Player):
 
     def update_score(self, points):
         self.score += points
-
-    def to_dict(self):
-        return {
-            "nom": self.nom,
-            "prenom": self.prenom,
-            "date_de_naissance": self.date_de_naissance,
-            "identifiant_club": self.identifiant_club,
-            "score": self.score
-        }

@@ -14,7 +14,7 @@ class PlayerController:
             players = pm.load_players("joueurs.json")
             # on ajoute le nouveau joueur a la liste
             players.append(player)
-            # on mret a jour le fichier des joueurs
+            # on met a jour le fichier des joueurs
             pm.save_players(players, "joueurs.json")
         except Exception as e:
             print(f"Erreur de sauvegarde : {e}")

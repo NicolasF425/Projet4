@@ -18,6 +18,7 @@ def save_players(players, filename):
 
 @staticmethod
 def load_players(filename):
+    '''Charge une liste de joueurs a partir d'un fichier json'''
     try:
         with open(filename, "r") as file:
             data = json.load(file)
