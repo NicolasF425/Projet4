@@ -1,6 +1,5 @@
 # gere la sauvegarde d'une liste de joueurs
 # et la lecture du fichier des joueurs
-
 import json
 from models.player import Player
 

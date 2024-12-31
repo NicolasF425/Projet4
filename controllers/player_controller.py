@@ -1,10 +1,13 @@
+from time import sleep
+from os import path
 from models.player import Player
-from views.player_view import PlayerView, AddPlayerView
+from views.player_view import PlayerView, AddPlayerView, ListPlayersView
 from utilities import players_manager as pm
 
 
 class PlayerController:
 
+    FILENAME = "joueurs.json"
     ELEMENTS_MENU = ["1/ Créer un nouveau joueur\n", "2/ lister les joueurs\n", "3/ Exporter la liste des joueurs\n",
                      "4/ RETOUR\n"]
     RETOUR = 4
@@ -15,6 +18,15 @@ class PlayerController:
 
     def manage_input(self):
         choix = self.view.input_choice()
+        if choix == 1:
+            view = AddPlayerView()
+            player_datas = view.add_new_player()
+            self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
+        if choix == 2:
+            view = ListPlayersView()
+            players = pm.load_players(self.FILENAME)
+            view.list_players(players)
+            sleep(5)
         if choix == self.RETOUR:
             return choix
 
@@ -26,18 +38,21 @@ class PlayerController:
                             date_de_naissance=BirthDate,
                             identifiant_club=ClubId)
             # on recupere la liste des joueurs du fichier
-            players = pm.load_players("joueurs.json")
+            players = []
+            if path.exists(self.FILENAME) is True:
+                players = pm.load_players(self.FILENAME)
             # on ajoute le nouveau joueur a la liste
             players.append(player)
             # on met a jour le fichier des joueurs
-            pm.save_players(players, "joueurs.json")
+            pm.save_players(players, self.FILENAME)
+            sleep(3)
         except Exception as e:
-            print(f"Erreur de sauvegarde : {e}")
+            print(f"Erreur de fichier : {e}")
 
     @classmethod
     def list_players(self):
         try:
-            players = pm.load_players("joueurs.json")
+            players = pm.load_players(self.FILENAME)
             return players
         except Exception as e:
             print(f"Erreur de recuperation des joueurs : {e}")

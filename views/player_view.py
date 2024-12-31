@@ -41,6 +41,8 @@ class PlayerView:
 
 class AddPlayerView:
 
+    TITRE_VUE = "AJOUTER UN JOUEUR\n"
+
     nom = ""
     prenom = ""
     date_de_naissance = ""
@@ -48,6 +50,7 @@ class AddPlayerView:
 
     def __init__(self):
         clear_screen()
+        print(self.TITRE_VUE)
 
     def add_new_player(self):
         print("Creation du nouveau joueur")
@@ -59,7 +62,6 @@ class AddPlayerView:
         return self.datas_player
 
 
-'''
 class ListPlayersView:
 
     SPACES = "                              "
@@ -68,10 +70,9 @@ class ListPlayersView:
     def __init__(self):
         clear_screen()
 
-    def list_players(self):
-        players = PC.list_players() # type: ignore
+    def list_players(self, players):
         for player in players:
-            player.print_player()
+            self.print_player(player)
 
     @classmethod
     def print_player_header(self):
@@ -99,11 +100,3 @@ class ListPlayersView:
               temp_prenom + "|" +
               player.date_de_naissance + "       |" +
               player.identifiant_club)
-
-    def list_players_by_name(self):
-        players = PC.list_players()
-        sorted_players = PC.sort_by_name(players)
-        self.print_player_header()
-        for player in sorted_players:
-            self.print_player(player)
-'''
