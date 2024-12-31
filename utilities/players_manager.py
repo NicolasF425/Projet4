@@ -29,3 +29,8 @@ def load_players(filename):
     except Exception as e:
         print(f"Erreur de chargement: {e}")
     return None
+
+
+@staticmethod
+def export_players(filename, players):
+    pass

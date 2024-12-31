@@ -1,11 +1,26 @@
 from models.player import Player
+from views.player_view import PlayerView, AddPlayerView
 from utilities import players_manager as pm
 
 
 class PlayerController:
 
+    ELEMENTS_MENU = ["1/ Créer un nouveau joueur\n", "2/ lister les joueurs\n", "3/ Exporter la liste des joueurs\n",
+                     "4/ RETOUR\n"]
+    RETOUR = 4
+
+    def __init__(self):
+        self.view = PlayerView(self.ELEMENTS_MENU)
+        self.view.print_view()
+
+    def manage_input(self):
+        choix = self.view.input_choice()
+        if choix == self.RETOUR:
+            return choix
+
     @classmethod
     def create_player(self, Name, FirstName, BirthDate, ClubId):
+        '''Sauve la liste des joueurs dans le fichier json'''
         try:
             player = Player(nom=Name, prenom=FirstName,
                             date_de_naissance=BirthDate,

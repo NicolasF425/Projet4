@@ -1,5 +1,42 @@
-from controllers.player_controller import PlayerController as PC
+from time import sleep
 from utilities.clear_screen import clear_screen
+
+
+class PlayerView:
+
+    TITRE_VUE = "GESTION DES JOUEURS\n"
+
+    def __init__(self, elements_menu):
+        self.elements_menu = elements_menu
+        self.nb_elements = len(elements_menu)
+
+    def print_view(self):
+        clear_screen()
+        print(self.TITRE_VUE)
+        for item in self.elements_menu:
+            print(item)
+
+    def input_choice(self):
+        choix_ok = False
+        while choix_ok is False:
+            self.print_view()
+            choix = input("\nSélectioner : ")
+            choix_ok = self.check_choix(choix)
+        return int(choix)
+
+    def check_choix(self, choix):
+        try:
+            choix = int(choix)
+        except ValueError:
+            print("Veuillez Entrer un nombre !")
+            sleep(2)
+            return False
+        if choix > 0 and choix <= self.nb_elements:
+            return True
+        else:
+            print("Vous devez choisir une option de 1 à "+str(self.nb_elements))
+            sleep(2)
+            return False
 
 
 class AddPlayerView:
@@ -18,10 +55,11 @@ class AddPlayerView:
         self.prenom = input("Prenom : ")
         self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
         self.identifiant_club = input("identifiant du club :")
-        PC.create_player(self.nom, self.prenom,
-                         self.date_de_naissance, self.identifiant_club)
+        self.datas_player = [self.nom, self.prenom, self.date_de_naissance, self.identifiant_club]
+        return self.datas_player
 
 
+'''
 class ListPlayersView:
 
     SPACES = "                              "
@@ -31,7 +69,7 @@ class ListPlayersView:
         clear_screen()
 
     def list_players(self):
-        players = PC.list_players()
+        players = PC.list_players() # type: ignore
         for player in players:
             player.print_player()
 
@@ -68,3 +106,4 @@ class ListPlayersView:
         self.print_player_header()
         for player in sorted_players:
             self.print_player(player)
+'''
