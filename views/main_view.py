@@ -1,5 +1,5 @@
-from utilities.clear_screen import clear_screen
 from time import sleep
+from utilities.clear_screen import clear_screen
 
 
 class MainView:

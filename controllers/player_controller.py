@@ -1,7 +1,8 @@
 from time import sleep
+from datetime import date
 from os import path
 from models.player import Player
-from views.player_view import PlayerView, AddPlayerView, ListPlayersView
+from views.player_view import PlayerView, AddPlayerView, ListPlayersView, ExportPlayersView
 from utilities import players_manager as pm
 
 
@@ -26,7 +27,13 @@ class PlayerController:
             view = ListPlayersView()
             players = pm.load_players(self.FILENAME)
             view.list_players(players)
-            sleep(5)
+            input("\nAppuyez sur entrée...")
+        if choix == 3:
+            players = pm.load_players(self.FILENAME)
+            fichier_export = "Joueurs_au_"+date.today().strftime("%d%m%Y")+".txt"
+            view = ExportPlayersView()
+            pm.export_players(fichier_export, players)
+            view.print_export(len(players))
         if choix == self.RETOUR:
             return choix
 

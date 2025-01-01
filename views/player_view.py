@@ -100,3 +100,14 @@ class ListPlayersView:
               temp_prenom + "|" +
               player.date_de_naissance + "       |" +
               player.identifiant_club)
+
+
+class ExportPlayersView:
+
+    def __init__(self):
+        clear_screen()
+        print("Export en cours...")
+
+    def print_export(self, nombre_joueurs):
+        print(str(nombre_joueurs) + "joueur(s) exporté(s)\n")
+        input("\nAppuyez sur entrée...")

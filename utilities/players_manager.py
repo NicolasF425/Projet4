@@ -32,4 +32,11 @@ def load_players(filename):
 
 @staticmethod
 def export_players(filename, players):
-    pass
+    try:
+        with open(filename, "w") as file:
+            file.write("Nom" + " " + "Prenom" + " " + "Date de naissance" + " " + "Identifiant club\n")
+            for player in players:
+                file.write(player.nom + " " + player.prenom + " " + player.date_de_naissance + " "
+                           + player.identifiant_club+"\n")
+    except Exception as e:
+        print(f"Erreur {e}")

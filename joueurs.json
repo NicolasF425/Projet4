@@ -4,5 +4,11 @@
         "prenom": "prenom1",
         "date_de_naissance": "12/10/2015",
         "identifiant_club": "AS12345"
+    },
+    {
+        "nom": "nom2",
+        "prenom": "prenom2",
+        "date_de_naissance": "04/05/2014",
+        "identifiant_club": "ER45321"
     }
 ]
