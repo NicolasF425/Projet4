@@ -1,14 +1,26 @@
 [
     {
-        "nom": "nom1",
-        "prenom": "prenom1",
+        "nom": "Nom1",
+        "prenom": "Prenom1",
         "date_de_naissance": "12/10/2015",
         "identifiant_club": "AS12345"
     },
     {
-        "nom": "nom2",
-        "prenom": "prenom2",
+        "nom": "Nom2",
+        "prenom": "Prenom2",
         "date_de_naissance": "04/05/2014",
         "identifiant_club": "ER45321"
+    },
+    {
+        "nom": "Martin",
+        "prenom": "Pierre",
+        "date_de_naissance": "10/02/2000",
+        "identifiant_club": "SD12654"
+    },
+    {
+        "nom": "Orlan",
+        "prenom": "John",
+        "date_de_naissance": "05/04/1999",
+        "identifiant_club": "FD87456"
     }
 ]

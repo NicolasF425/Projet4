@@ -7,10 +7,10 @@ class Match:
         self.est_fini = False
 
     '''Met a jour le score des joueurs et termine le match'''
-    def set_result(self, score_player1, score_player2):
-        result = ([self.scores_joueurs[0][0], score_player1],
+    def set_resultat(self, score_player1, score_player2):
+        resultat = ([self.scores_joueurs[0][0], score_player1],
                   [self.scores_joueurs[1][0], score_player2])
-        self.scores_joueurs = result
+        self.scores_joueurs = resultat
         self.est_fini = True
 
     def to_dict(self):

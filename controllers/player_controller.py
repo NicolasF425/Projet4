@@ -19,21 +19,35 @@ class PlayerController:
 
     def manage_input(self):
         choix = self.view.input_choice()
+
+        # Nouveau joueur
         if choix == 1:
-            view = AddPlayerView()
-            player_datas = view.add_new_player()
+            ok = False
+            while ok is False:
+                view = AddPlayerView()
+                player_datas = view.add_new_player()
+                ok = self.check_player_datas(player_datas)
             self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
+
+        # Liste des joueurs par ordre alphabetique
         if choix == 2:
             view = ListPlayersView()
-            players = pm.load_players(self.FILENAME)
-            view.list_players(players)
+            joueurs = pm.load_players(self.FILENAME)
+            joueurs = self.sort_by_name(joueurs)
+            view.list_players(joueurs)
             input("\nAppuyez sur entrée...")
+
+        # Export dans un fichier txt des joueurs par ordre alphabetique
         if choix == 3:
-            players = pm.load_players(self.FILENAME)
+            joueurs = pm.load_players(self.FILENAME)
+            joueurs = self.sort_by_name(joueurs)
             fichier_export = "Joueurs_au_"+date.today().strftime("%d%m%Y")+".txt"
             view = ExportPlayersView()
-            pm.export_players(fichier_export, players)
-            view.print_export(len(players))
+            ok = pm.export_players(fichier_export, joueurs)
+            if ok is True:
+                view.print_export(len(joueurs))
+
+        # Retour
         if choix == self.RETOUR:
             return choix
 
@@ -56,7 +70,6 @@ class PlayerController:
         except Exception as e:
             print(f"Erreur de fichier : {e}")
 
-    @classmethod
     def list_players(self):
         try:
             players = pm.load_players(self.FILENAME)
@@ -64,27 +77,47 @@ class PlayerController:
         except Exception as e:
             print(f"Erreur de recuperation des joueurs : {e}")
 
-    @classmethod
-    def check_name(self, name):
-        if name == "":
+    def check_nom(self, nom):
+        if nom == "":
             print("Le nom ne peut etre vide !")
-            return None
+            return False
+        return True
 
-    @classmethod
-    def check_firstname(self, firstname):
-        if firstname == "":
+    def check_prenom(self, prenom):
+        if prenom == "":
             print("le prenom ne peut etre vide !")
-            return None
+            return False
+        return True
 
-    @classmethod
-    def check_birthdate(self, birthdate):
-        pass
+    def check_date_de_naissance(self, date_de_naissance):
+        longueur = len(date_de_naissance)
+        if longueur < 10 or longueur > 10:
+            print("date de naissance mal formatée !")
+            return False
+        return True
 
-    @classmethod
-    def check_idclub(self, idclub):
-        pass
+    def check_identifiant_club(self, identifiant_club):
+        longueur = len(identifiant_club)
+        if longueur == 0 or longueur > 7:
+            print("Identifiant du club mal formaté !")
+            return False
+        return True
 
-    @classmethod
+    def check_player_datas(self, player_datas):
+        nom = player_datas[0]
+        prenom = player_datas[1]
+        date_de_naissance = player_datas[2]
+        identifiant_club = player_datas[3]
+        print("")
+        nom_ok = self.check_nom(nom)
+        prenom_ok = self.check_prenom(prenom)
+        date_de_naissance_ok = self.check_date_de_naissance(date_de_naissance)
+        identifiant_club_ok = self.check_identifiant_club(identifiant_club)
+        if (nom_ok and prenom_ok and date_de_naissance_ok and identifiant_club_ok):
+            return True
+        sleep(2)
+        return False
+
     def sort_by_name(self, players):
         sorted_players = sorted(players, key=lambda player: player.nom)
         return sorted_players

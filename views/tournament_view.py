@@ -2,10 +2,10 @@ from time import sleep
 from utilities.clear_screen import clear_screen
 
 
-class PlayerView:
-    '''Vue du menu de gestion des joueurs'''
+class TournamentView:
+    '''Vue du menu de gestion des tournois'''
 
-    TITRE_VUE = "GESTION DES JOUEURS\n-------------------\n"
+    TITRE_VUE = "GESTION DES TOURNOIS\n--------------------\n"
 
     def __init__(self, elements_menu):
         self.elements_menu = elements_menu
@@ -40,36 +40,31 @@ class PlayerView:
             return False
 
 
-class AddPlayerView:
-    '''Vue pour la creation d'un nouveau joueur'''
-
-    TITRE_VUE = "AJOUTER UN JOUEUR\n-----------------\n"
-
-    nom = ""
-    prenom = ""
-    date_de_naissance = ""
-    identifiant_club = ""
+class NewTournamentView:
 
     def __init__(self):
         clear_screen()
-        print(self.TITRE_VUE)
 
-    def add_new_player(self):
-        print("Creation du nouveau joueur")
-        self.nom = input("Nom : ")
-        self.prenom = input("Prenom : ")
-        self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
-        self.identifiant_club = input("identifiant du club :")
-        self.datas_player = [self.nom, self.prenom, self.date_de_naissance, self.identifiant_club]
-        return self.datas_player
+    def param_tournament(self):
+        print("CREATION D'UN NOUVEAU TOURNOI\n-----------------------------\n")
+        nom = input("Nom :")
+        lieu = input("Lieu :")
+        date_debut = input("Date de début :")
+        date_fin = input("Date de fin :")
+        nombre_de_rounds = input("Nombre de rounds :")
+        description = input("Description :")
+        datas_tournament = [nom, lieu, date_debut, date_fin, nombre_de_rounds, description]
+        return datas_tournament
 
 
-class ListPlayersView:
-    '''Vue pour la liste des joueurs'''
+class PlayerSelectionView:
+    '''Vue pour la selection des joueurs'''
 
-    TITRE_VUE = "LISTE DES JOUEURS\n-----------------\n"
+    TITRE_VUE = "SELECTION DES JOUEURS\n---------------------\n"
     SPACES = "                              "
     LARGEUR_COLONNE = 15
+
+    players = []
 
     def __init__(self):
         clear_screen()
@@ -77,16 +72,19 @@ class ListPlayersView:
 
     def list_players(self, players):
         self.print_player_header()
+        self.players = players
+        numero = 0
         for player in players:
-            self.print_player(player)
+            numero += 1
+            self.print_player(player, numero)
 
     def print_player_header(self):
-        print("Nom" + self.SPACES[0:self.LARGEUR_COLONNE-3] + "|"
+        print("    |" + "Nom" + self.SPACES[0:self.LARGEUR_COLONNE-3] + "|"
               + "Prenom" + self.SPACES[0:self.LARGEUR_COLONNE-6] + "|"
               + "Date de naissance|"
               + "Club"+"\n")
 
-    def print_player(self, player):
+    def print_player(self, player, numero):
         temp_nom = player.nom
         temp_prenom = player.prenom
         delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
@@ -101,19 +99,11 @@ class ListPlayersView:
         else:
             temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
 
-        print(temp_nom + "|" +
-              temp_prenom + "|" +
+        print(str(numero) + "|" + "temp_nom + |"
+              + temp_prenom + "|" +
               player.date_de_naissance + "       |" +
               player.identifiant_club)
 
-
-class ExportPlayersView:
-    '''Vue de l'export des joueurs vers un fichier txt'''
-
-    def __init__(self):
-        clear_screen()
-        print("Export en cours...")
-
-    def print_export(self, nombre_joueurs):
-        print(str(nombre_joueurs) + "joueur(s) exporté(s)\n")
-        input("\nAppuyez sur entrée...")
+    def select_players(self):
+        selection = input("Numéro d'un joueurs à sélectionner")
+        return selection

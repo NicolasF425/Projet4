@@ -1,6 +1,7 @@
 import sys
 from views.main_view import MainView
 from controllers.player_controller import PlayerController
+from controllers.tournament_controller import TournamentController
 
 
 class MainController:
@@ -21,4 +22,9 @@ class MainController:
                 player_controller = PlayerController()
                 while retour is not player_controller.RETOUR:
                     retour = player_controller.manage_input()
+            if choix == 2:
+                retour = 0
+                tournament_controller = TournamentController()
+                while retour is not tournament_controller.RETOUR:
+                    retour = tournament_controller.manage_input()
         sys.exit(1)

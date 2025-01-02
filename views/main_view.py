@@ -5,7 +5,7 @@ from utilities.clear_screen import clear_screen
 class MainView:
     '''Vue menu principal'''
 
-    TITRE_VUE = "GESTION DE TOURNOIS D'ECHECS\n"
+    TITRE_VUE = "GESTION DE TOURNOIS D'ECHECS\n----------------------------\n"
 
     def __init__(self, elements_menu):
         self.elements_menu = elements_menu

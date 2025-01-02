@@ -1,5 +1,6 @@
 from random import shuffle
 from models.round import Round
+from models.match import Match
 
 
 class Tournament:
@@ -26,9 +27,6 @@ class Tournament:
 
     def add_round(self, round):
         self.rounds.append(round)
-
-    def set_end_date(self, end_date):
-        self.date_fin = end_date
 
     def set_current_round(self, number):
         pass
@@ -76,6 +74,10 @@ class Tournament:
 
     def sort_players_by_score(self):
         self.joueurs = self.joueurs.sort(key=lambda player: player.nom)
+
+    def create_match(self, Player1, Player2, Player1Score, Player2Score):
+        match = Match(Player1, Player2, Player1Score, Player2Score)
+        return match
 
     def init_matchs_matrix(self):
         for player in self.joueurs:

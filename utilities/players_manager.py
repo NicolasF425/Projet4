@@ -38,5 +38,7 @@ def export_players(filename, players):
             for player in players:
                 file.write(player.nom + " " + player.prenom + " " + player.date_de_naissance + " "
                            + player.identifiant_club+"\n")
+        return True
     except Exception as e:
         print(f"Erreur {e}")
+    return None
