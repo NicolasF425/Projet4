@@ -67,16 +67,20 @@ class PlayerSelectionView:
     players = []
 
     def __init__(self):
+        pass
+
+    def print_vue(self, joueurs_fichier, selection_joueurs):
         clear_screen()
         print(self.TITRE_VUE)
-
-    def list_players(self, players):
         self.print_player_header()
-        self.players = players
-        numero = 0
-        for player in players:
-            numero += 1
-            self.print_player(player, numero)
+        self.list_players(joueurs_fichier)
+        self.print_selection_header()
+        self.list_players(selection_joueurs)
+
+    def list_players(self, joueurs):
+        self.players = joueurs
+        for player in joueurs:
+            self.print_player(player)
 
     def print_player_header(self):
         print("    |" + "Nom" + self.SPACES[0:self.LARGEUR_COLONNE-3] + "|"
@@ -84,9 +88,13 @@ class PlayerSelectionView:
               + "Date de naissance|"
               + "Club"+"\n")
 
-    def print_player(self, player, numero):
-        temp_nom = player.nom
-        temp_prenom = player.prenom
+    def print_selection_header(self):
+        print("\nJOUEURS SELECTIONNES :\n")
+
+    def print_player(self, joueur):
+        temp_nom = joueur.nom
+        temp_prenom = joueur.prenom
+        numero = joueur.numero_joueur
         delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
         delta_prenom = len(temp_prenom)-self.LARGEUR_COLONNE
         if delta_nom < 0:   # nom plus court que largeur colonne
@@ -99,11 +107,11 @@ class PlayerSelectionView:
         else:
             temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
 
-        print(str(numero) + "|" + "temp_nom + |"
+        print(str(numero)+self.SPACES[0:4-len(str(numero))] + "|" + temp_nom + "|"
               + temp_prenom + "|" +
-              player.date_de_naissance + "       |" +
-              player.identifiant_club)
+              joueur.date_de_naissance + "       |" +
+              joueur.identifiant_club)
 
     def select_players(self):
-        selection = input("Numéro d'un joueurs à sélectionner")
+        selection = input("\nNuméro d'un joueurs à sélectionner (Entrée pour quitter la sélection) : ")
         return selection

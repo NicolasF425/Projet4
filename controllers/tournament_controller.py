@@ -31,15 +31,33 @@ class TournamentController:
             tournoi.lieu = datas[1]
             tournoi.date_debut = datas[2]
             tournoi.date_fin = datas[3]
-            tournoi.nombre_de_rounds = datas[4]
+            tournoi.nombre_de_rounds = int(datas[4])
             tournoi.description = datas[5]
             # si ok on passe a la selection des joueurs
             view = PlayerSelectionView()
-            view.print_player_header()
-            players = pm.load_players(self.FILENAME)
-            view.list_players(players)
-            while view.select_players() != "":
-                pass
+            selection_ok = False
+            # on charge tous les joueurs du fichier json
+            tous_joueurs = pm.load_players(self.FILENAME)
+            n = 0
+            for joueur in tous_joueurs:
+                n += 1
+                joueur.numero_joueur = n
+            selection_joueurs = []
+            while selection_ok is False:
+                view.print_vue(tous_joueurs, selection_joueurs)
+                numero_choisi = view.select_players()
+                if numero_choisi == "":
+                    selection_ok = True
+                else:
+                    numero_choisi = int(numero_choisi)
+                    # on met a jour les listes
+                    i = 0
+                    for joueur in tous_joueurs:
+                        if joueur.numero_joueur == numero_choisi:
+                            joueur = tous_joueurs[i]
+                            selection_joueurs.append(joueur)
+                            del tous_joueurs[i]
+                        i += 1
 
         # Modification de tournoi existant
         if choix == 2:
@@ -72,17 +90,27 @@ class TournamentController:
             return False
         return True
 
+    def check_nombre_rounds(self, nombre):
+        try:
+            test_nombre = int(nombre)
+        except ValueError:
+            print("Veuillez Entrer un nombre !")
+            return -1
+        return test_nombre
+
     def check_tournament_datas(self, tournament_datas):
         nom = tournament_datas[0]
         lieu = tournament_datas[1]
         date_debut = tournament_datas[2]
         date_fin = tournament_datas[3]
+        nombre_de_rounds = tournament_datas[4]
         print("")
         nom_ok = self.check_nom(nom)
         lieu_ok = self.check_lieu(lieu)
         date_debut_ok = self.check_date(date_debut)
         date_fin_ok = self.check_date(date_fin)
-        if (nom_ok and lieu_ok and date_debut_ok and date_fin_ok):
+        nombre_de_rounds = self.check_nombre_rounds(nombre_de_rounds)
+        if (nom_ok and lieu_ok and date_debut_ok and date_fin_ok and nombre_de_rounds > 0):
             return True
         sleep(2)
         return False

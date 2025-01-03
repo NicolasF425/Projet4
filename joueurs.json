@@ -22,5 +22,11 @@
         "prenom": "John",
         "date_de_naissance": "05/04/1999",
         "identifiant_club": "FD87456"
+    },
+    {
+        "nom": "Frick",
+        "prenom": "Karl",
+        "date_de_naissance": "12/04/1998",
+        "identifiant_club": "FG45687"
     }
 ]
