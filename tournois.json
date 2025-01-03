@@ -1,0 +1,46 @@
+[
+    {
+        "nom": "Test1",
+        "lieu": "ici",
+        "date_debut": "12/12/2025",
+        "date_fin": "12/12/2025",
+        "nombre_de_rounds": 4,
+        "round_actuel": 1,
+        "joueurs": [
+            {
+                "nom": "Orlan",
+                "prenom": "John",
+                "date_de_naissance": "05/04/1999",
+                "identifiant_club": "FD87456",
+                "numero_joueur": 4,
+                "score": 0
+            },
+            {
+                "nom": "Frick",
+                "prenom": "Karl",
+                "date_de_naissance": "12/04/1998",
+                "identifiant_club": "FG45687",
+                "numero_joueur": 5,
+                "score": 0
+            },
+            {
+                "nom": "Nom2",
+                "prenom": "Prenom2",
+                "date_de_naissance": "04/05/2014",
+                "identifiant_club": "ER45321",
+                "numero_joueur": 2,
+                "score": 0
+            },
+            {
+                "nom": "Martin",
+                "prenom": "Pierre",
+                "date_de_naissance": "10/02/2000",
+                "identifiant_club": "SD12654",
+                "numero_joueur": 3,
+                "score": 0
+            }
+        ],
+        "tours": [],
+        "description": "test"
+    }
+]

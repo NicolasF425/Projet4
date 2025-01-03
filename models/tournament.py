@@ -42,7 +42,7 @@ class Tournament:
             "date_fin": self.date_fin,
             "nombre_de_rounds": self.nombre_de_rounds,
             "round_actuel": self.round_actuel,
-            "joueurs": [player.to_dict() for player in self.joueurs],
+            "joueurs": [player.to_dict(2) for player in self.joueurs],
             "tours": [round.to_dict() for round in self.rounds],
             "description": self.description
         }

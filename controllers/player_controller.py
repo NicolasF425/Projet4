@@ -66,7 +66,7 @@ class PlayerController:
             players.append(player)
             # on met a jour le fichier des joueurs
             pm.save_players(players, self.FILENAME)
-            sleep(3)
+            sleep(2)
         except Exception as e:
             print(f"Erreur de fichier : {e}")
 

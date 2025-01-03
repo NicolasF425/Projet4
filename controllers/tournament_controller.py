@@ -1,12 +1,14 @@
 from views.tournament_view import TournamentView, NewTournamentView, PlayerSelectionView
 from models.tournament import Tournament
 from utilities import players_manager as pm
+from utilities import tournaments_manager as tm
 from time import sleep
 
 
 class TournamentController:
 
-    FILENAME = "joueurs.json"
+    FICHIER_JOUEURS = "joueurs.json"
+    FICHIER_TOURNOIS = "tournois.json"
     ELEMENTS_MENU = ["1/ Créer un nouveau tournoi\n", "2/ Mettre à jour un tournoi\n", "3/ Lister les tournois\n",
                      "4/ RETOUR\n"]
     RETOUR = 4
@@ -37,7 +39,7 @@ class TournamentController:
             view = PlayerSelectionView()
             selection_ok = False
             # on charge tous les joueurs du fichier json
-            tous_joueurs = pm.load_players(self.FILENAME)
+            tous_joueurs = pm.load_players(self.FICHIER_JOUEURS)
             n = 0
             for joueur in tous_joueurs:
                 n += 1
@@ -50,7 +52,7 @@ class TournamentController:
                     selection_ok = True
                 else:
                     numero_choisi = int(numero_choisi)
-                    # on met a jour les listes
+                    # on met a jour les listes de joueurs affichees
                     i = 0
                     for joueur in tous_joueurs:
                         if joueur.numero_joueur == numero_choisi:
@@ -58,6 +60,19 @@ class TournamentController:
                             selection_joueurs.append(joueur)
                             del tous_joueurs[i]
                         i += 1
+            tournoi.joueurs = selection_joueurs
+            tournois = []
+            tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
+            # si des tournois existent
+            if tournois is not None:
+                tournois.append(tournoi)
+                tm.save_tournaments(tournois, self.FICHIER_TOURNOIS)
+                sleep(2)
+            else:
+                tournois = []
+                tournois.append(tournoi)
+                tm.save_tournaments(tournois, self.FICHIER_TOURNOIS)
+                sleep(2)
 
         # Modification de tournoi existant
         if choix == 2:
