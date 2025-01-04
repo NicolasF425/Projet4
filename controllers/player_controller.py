@@ -33,8 +33,9 @@ class PlayerController:
         if choix == 2:
             view = ListPlayersView()
             joueurs = pm.load_players(self.FILENAME)
-            joueurs = self.sort_by_name(joueurs)
-            view.list_players(joueurs)
+            if joueurs is not None:
+                joueurs = self.sort_by_name(joueurs)
+                view.list_players(joueurs)
             input("\nAppuyez sur entrée...")
 
         # Export dans un fichier txt des joueurs par ordre alphabetique
@@ -51,7 +52,6 @@ class PlayerController:
         if choix == self.RETOUR:
             return choix
 
-    @classmethod
     def create_player(self, Name, FirstName, BirthDate, ClubId):
         '''Sauve la liste des joueurs dans le fichier json'''
         try:
@@ -60,9 +60,12 @@ class PlayerController:
                             identifiant_club=ClubId)
             # on recupere la liste des joueurs du fichier
             players = []
+            prochain_numero = 1
             if path.exists(self.FILENAME) is True:
                 players = pm.load_players(self.FILENAME)
+                prochain_numero = len(players) + 1
             # on ajoute le nouveau joueur a la liste
+            player.numero_joueur = prochain_numero
             players.append(player)
             # on met a jour le fichier des joueurs
             pm.save_players(players, self.FILENAME)
@@ -72,10 +75,12 @@ class PlayerController:
 
     def list_players(self):
         try:
-            players = pm.load_players(self.FILENAME)
-            return players
+            if path.exists(self.FILENAME) is True:
+                players = pm.load_players(self.FILENAME)
+                return players
         except Exception as e:
             print(f"Erreur de recuperation des joueurs : {e}")
+            return None
 
     def check_nom(self, nom):
         if nom == "":
@@ -103,6 +108,7 @@ class PlayerController:
             return False
         return True
 
+    # controle si les informations entrees sont celles attendues
     def check_player_datas(self, player_datas):
         nom = player_datas[0]
         prenom = player_datas[1]

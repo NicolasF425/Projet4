@@ -91,6 +91,7 @@ class PlayerSelectionView:
     def print_selection_header(self):
         print("\nJOUEURS SELECTIONNES :\n")
 
+    # ecrit une ligne formatee pour un joueur
     def print_player(self, joueur):
         temp_nom = joueur.nom
         temp_prenom = joueur.prenom

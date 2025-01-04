@@ -6,7 +6,7 @@ from models.match import Match
 class Tournament:
 
     def __init__(self, nom="", lieu="", date_debut="", date_fin="", nombre_de_rounds=4, round_actuel=1, joueurs=[],
-                 tours=[], description="", matrice_des_matchs=[], en_cours=False):
+                 tours=[], description="", matrice_des_matchs=[], en_cours=False, numero_tournoi=0):
         self.nom = nom
         self.lieu = lieu
         self.date_debut = date_debut
@@ -18,6 +18,7 @@ class Tournament:
         self.description = description
         self.matchs_matrix = matrice_des_matchs     # pour les joueurs deja affrontes
         self.en_cours = en_cours
+        self.numero_tournoi = 0
 
     def __repr__(self):
         return f"Tournament({self.__dict__})"
@@ -28,11 +29,14 @@ class Tournament:
     def add_round(self, round):
         self.rounds.append(round)
 
-    def set_current_round(self, number):
-        pass
+    def set_current_round(self, numero_round):
+        self.round_actuel = numero_round
 
     def check_all_rounds_finished():
         pass
+
+    def set_numero_tournoi(self, numero):
+        self.numero_tournoi = numero
 
     def to_dict(self):
         return {
@@ -44,7 +48,8 @@ class Tournament:
             "round_actuel": self.round_actuel,
             "joueurs": [player.to_dict(2) for player in self.joueurs],
             "tours": [round.to_dict() for round in self.rounds],
-            "description": self.description
+            "description": self.description,
+            "numero_tournoi": self.numero_tournoi
         }
 
     def init_players_ids(self):

@@ -1,11 +1,13 @@
 class Player:
     '''Classe de joueur pour les fichier json'''
 
-    def __init__(self, **kwargs):
-        for cle, valeur in kwargs.items():
-            setattr(self, cle, valeur)
-        self.numero_joueur = 0
-        self.score = 0
+    def __init__(self, nom="", prenom="", date_de_naissance="", identifiant_club="", numero_joueur=0, score=0):
+        self.nom = nom
+        self.prenom = prenom
+        self.date_de_naissance = date_de_naissance
+        self.identifiant_club = identifiant_club
+        self.numero_joueur = numero_joueur
+        self.score = score
 
     def set_player_id(self, id):
         self.numero_joueur = id
@@ -22,7 +24,8 @@ class Player:
                 "nom": self.nom,
                 "prenom": self.prenom,
                 "date_de_naissance": self.date_de_naissance,
-                "identifiant_club": self.identifiant_club
+                "identifiant_club": self.identifiant_club,
+                "numero_joueur": self.numero_joueur
             }
         else:
             return {
@@ -33,3 +36,7 @@ class Player:
                 "numero_joueur": self.numero_joueur,
                 "score": self.score
             }
+
+    def to_list(self):
+        return [self.nom, self.prenom, self.date_de_naissance, self.identifiant_club,
+                self.numero_joueur, self.score]

@@ -1,32 +1,23 @@
 [
     {
-        "nom": "Nom1",
-        "prenom": "Prenom1",
-        "date_de_naissance": "12/10/2015",
-        "identifiant_club": "AS12345"
-    },
-    {
-        "nom": "Nom2",
-        "prenom": "Prenom2",
-        "date_de_naissance": "04/05/2014",
-        "identifiant_club": "ER45321"
-    },
-    {
-        "nom": "Martin",
-        "prenom": "Pierre",
-        "date_de_naissance": "10/02/2000",
-        "identifiant_club": "SD12654"
-    },
-    {
-        "nom": "Orlan",
-        "prenom": "John",
-        "date_de_naissance": "05/04/1999",
-        "identifiant_club": "FD87456"
-    },
-    {
-        "nom": "Frick",
+        "nom": "Urban",
         "prenom": "Karl",
-        "date_de_naissance": "12/04/1998",
-        "identifiant_club": "FG45687"
+        "date_de_naissance": "05/12/1985",
+        "identifiant_club": "AS43127",
+        "numero_joueur": 1
+    },
+    {
+        "nom": "Jones",
+        "prenom": "Paul",
+        "date_de_naissance": "12/06/2000",
+        "identifiant_club": "SD45987",
+        "numero_joueur": 2
+    },
+    {
+        "nom": "Richards",
+        "prenom": "Jane",
+        "date_de_naissance": "06/04/2001",
+        "identifiant_club": "GF67543",
+        "numero_joueur": 3
     }
 ]
