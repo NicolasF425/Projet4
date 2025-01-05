@@ -1,43 +1,42 @@
-from time import sleep
 from utilities.clear_screen import clear_screen
+from views.menu_view import MenuView
 
 
-class TournamentView:
+class Commons:
+    '''Classe pour fonctions communes'''
+
+    # ecrit une ligne formatee pour un joueur
+    def print_player(self, joueur):
+        temp_nom = joueur.nom
+        temp_prenom = joueur.prenom
+        numero = joueur.numero_joueur
+        delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
+        delta_prenom = len(temp_prenom)-self.LARGEUR_COLONNE
+        if delta_nom < 0:   # nom plus court que largeur colonne
+            temp_nom = temp_nom + self.SPACES[0:-delta_nom]
+        else:
+            temp_nom = temp_nom[0:self.LARGEUR_COLONNE]
+
+        if delta_prenom < 0:
+            temp_prenom = temp_prenom + self.SPACES[0:-delta_prenom]
+        else:
+            temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
+
+        print(str(numero)+self.SPACES[0:4-len(str(numero))] + "|" + temp_nom + "|"
+              + temp_prenom + "|" +
+              joueur.date_de_naissance + "       |" +
+              joueur.identifiant_club)
+
+
+class TournamentView(Commons, MenuView):
     '''Vue du menu de gestion des tournois'''
 
     TITRE_VUE = "GESTION DES TOURNOIS\n--------------------\n"
 
     def __init__(self, elements_menu):
+        self.titre_vue = self.TITRE_VUE
         self.elements_menu = elements_menu
         self.nb_elements = len(elements_menu)
-
-    def print_view(self):
-        clear_screen()
-        print(self.TITRE_VUE)
-        for item in self.elements_menu:
-            print(item)
-
-    def input_choice(self):
-        choix_ok = False
-        while choix_ok is False:
-            self.print_view()
-            choix = input("\nSélectioner : ")
-            choix_ok = self.check_choix(choix)
-        return int(choix)
-
-    def check_choix(self, choix):
-        try:
-            choix = int(choix)
-        except ValueError:
-            print("Veuillez Entrer un nombre !")
-            sleep(2)
-            return False
-        if choix > 0 and choix <= self.nb_elements:
-            return True
-        else:
-            print("Vous devez choisir une option de 1 à "+str(self.nb_elements))
-            sleep(2)
-            return False
 
 
 class NewTournamentView:
@@ -91,28 +90,18 @@ class PlayerSelectionView:
     def print_selection_header(self):
         print("\nJOUEURS SELECTIONNES :\n")
 
-    # ecrit une ligne formatee pour un joueur
-    def print_player(self, joueur):
-        temp_nom = joueur.nom
-        temp_prenom = joueur.prenom
-        numero = joueur.numero_joueur
-        delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
-        delta_prenom = len(temp_prenom)-self.LARGEUR_COLONNE
-        if delta_nom < 0:   # nom plus court que largeur colonne
-            temp_nom = temp_nom + self.SPACES[0:-delta_nom]
-        else:
-            temp_nom = temp_nom[0:self.LARGEUR_COLONNE]
-
-        if delta_prenom < 0:
-            temp_prenom = temp_prenom + self.SPACES[0:-delta_prenom]
-        else:
-            temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
-
-        print(str(numero)+self.SPACES[0:4-len(str(numero))] + "|" + temp_nom + "|"
-              + temp_prenom + "|" +
-              joueur.date_de_naissance + "       |" +
-              joueur.identifiant_club)
-
     def select_players(self):
         selection = input("\nNuméro d'un joueurs à sélectionner (Entrée pour quitter la sélection) : ")
         return selection
+
+
+class TournamentSummaryView(Commons):
+    '''Résume les paramètres entrés pour le tournoi'''
+
+    def __init__(self):
+        pass
+
+    def print_summary(self, tournament):
+        clear_screen()
+        for joueur in tournament.players:
+            self.print_player(joueur)

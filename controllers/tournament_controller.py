@@ -3,6 +3,7 @@ from models.tournament import Tournament
 from utilities import players_manager as pm
 from utilities import tournaments_manager as tm
 from time import sleep
+from random import shuffle
 
 
 class TournamentController:
@@ -36,9 +37,10 @@ class TournamentController:
         if choix == self.RETOUR:
             return choix
 
-    # creation et sauvegarde des informations
-    # initiales et des joueurs du tournois
     def create_tournament(self):
+        '''Créé et sauvegarde les informations
+        initiales et les joueurs du tournois'''
+
         tournoi = Tournament()
         # Entree des infos nom, lieu, date debut et date fin
         next = False
@@ -50,7 +52,7 @@ class TournamentController:
         tournoi.lieu = datas[1]
         tournoi.date_debut = datas[2]
         tournoi.date_fin = datas[3]
-        # le nombre de round est > 0 (non vide)
+        # si le nombre de round est > 0 (non vide)
         # on change la valeur par defaut
         if int(datas[4]) > 0:
             tournoi.nombre_de_rounds = int(datas[4])
@@ -77,6 +79,7 @@ class TournamentController:
                         del tous_joueurs[i]
                     i += 1
         tournoi.joueurs = selection_joueurs
+        self.shuffle_players(selection_joueurs)
         tournois = []
         tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
         # si pas de tournois a charger
@@ -90,12 +93,14 @@ class TournamentController:
         sleep(2)
 
     def check_nom(self, nom):
+        '''Vérifie si le champ nom est rempli'''
         if nom == "":
             print("Le nom ne peut etre vide !")
             return False
         return True
 
     def check_lieu(self, lieu):
+        '''Vérifie si le champ lieu est rempli'''
         if lieu == "":
             print("Le lieu ne peut etre vide !")
             return False
@@ -116,17 +121,22 @@ class TournamentController:
         return True
 
     def check_nombre_rounds(self, nombre):
+        '''Vérifie l'entrée du champ nombre de round
+        renvoit 0 si le champ est vie,
+        -1 si ce n'est pas un nombre qui a ete entré,
+        sinon le nombre de rounds est renvoyé'''
         if nombre == "":
             return 0
         # test si un nombre est bien entre
         try:
             test_nombre = int(nombre)
         except ValueError:
-            print("Veuillez Entrer un nombre !")
+            print("Veuillez entrer un nombre !")
             return -1
         return test_nombre
 
     def check_tournament_datas(self, tournament_datas):
+        '''Vérifie les champs du tournoi'''
         nom = tournament_datas[0]
         lieu = tournament_datas[1]
         date_debut = tournament_datas[2]
@@ -142,3 +152,12 @@ class TournamentController:
             return True
         sleep(2)
         return False
+
+    def shuffle_players(self, joueurs):
+        '''Melange la liste des joueurs et attribue un numero de joueur pour le tournoi'''
+        shuffle(joueurs)
+        i = 1
+        for joueur in joueurs:
+            joueur.numero_en_tournoi = i
+            i += 1
+        return joueurs

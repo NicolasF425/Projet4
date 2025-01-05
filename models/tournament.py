@@ -1,5 +1,3 @@
-from random import shuffle
-from models.round import Round
 from models.match import Match
 
 
@@ -57,25 +55,6 @@ class Tournament:
         for player in self.joueurs:
             player.set_player_id(i)
             i += 1
-
-    '''Melange la liste des joueurs'''
-    def shuffle_players(self):
-        shuffle(self.joueurs)
-
-    '''Initialise la liste des rounds'''
-    def init_rounds(self):
-        '''On melange les joueurs'''
-        self.shuffle_players()
-        '''On leur attribue un numero'''
-        id = 1
-        for player in self.joueurs:
-            player.set_player_id(id)
-            id += 1
-        '''On cree les rounds vides'''
-        for i in range(self.nombre_de_rounds):
-            round = Round(self.joueurs)
-            round.set_name("Round " + str(i+1))
-            self.add_round(round)
 
     def sort_players_by_score(self):
         self.joueurs = self.joueurs.sort(key=lambda player: player.nom)
