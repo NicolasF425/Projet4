@@ -4,7 +4,6 @@ import json
 from models.player import Player
 
 
-@staticmethod
 def save_players(players, filename):
     try:
         with open(filename, "w") as file:
@@ -15,7 +14,6 @@ def save_players(players, filename):
         print(f"Erreur de sauvegarde : {e}")
 
 
-@staticmethod
 def load_players(filename):
     '''Charge une liste de joueurs a partir d'un fichier json'''
     try:
@@ -27,18 +25,4 @@ def load_players(filename):
         print(f"Fichier {filename} non trouve.")
     except Exception as e:
         print(f"Erreur de chargement: {e}")
-    return None
-
-
-@staticmethod
-def export_players(filename, players):
-    try:
-        with open(filename, "w") as file:
-            file.write("Nom" + " " + "Prenom" + " " + "Date de naissance" + " " + "Identifiant club\n")
-            for player in players:
-                file.write(player.nom + " " + player.prenom + " " + player.date_de_naissance + " "
-                           + player.identifiant_club+"\n")
-        return True
-    except Exception as e:
-        print(f"Erreur {e}")
     return None

@@ -1,34 +1,9 @@
 from utilities.clear_screen import clear_screen
 from views.menu_view import MenuView
+from views.list_view import List_view
 
 
-class Commons:
-    '''Classe pour fonctions communes'''
-
-    # ecrit une ligne formatee pour un joueur
-    def print_player(self, joueur):
-        temp_nom = joueur.nom
-        temp_prenom = joueur.prenom
-        numero = joueur.numero_joueur
-        delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
-        delta_prenom = len(temp_prenom)-self.LARGEUR_COLONNE
-        if delta_nom < 0:   # nom plus court que largeur colonne
-            temp_nom = temp_nom + self.SPACES[0:-delta_nom]
-        else:
-            temp_nom = temp_nom[0:self.LARGEUR_COLONNE]
-
-        if delta_prenom < 0:
-            temp_prenom = temp_prenom + self.SPACES[0:-delta_prenom]
-        else:
-            temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
-
-        print(str(numero)+self.SPACES[0:4-len(str(numero))] + "|" + temp_nom + "|"
-              + temp_prenom + "|" +
-              joueur.date_de_naissance + "       |" +
-              joueur.identifiant_club)
-
-
-class TournamentView(Commons, MenuView):
+class TournamentView(MenuView):
     '''Vue du menu de gestion des tournois'''
 
     TITRE_VUE = "GESTION DES TOURNOIS\n--------------------\n"
@@ -56,36 +31,30 @@ class NewTournamentView:
         return datas_tournament
 
 
-class PlayerSelectionView:
+class PlayerSelectionView(List_view):
     '''Vue pour la selection des joueurs'''
 
     TITRE_VUE = "SELECTION DES JOUEURS\n---------------------\n"
-    SPACES = "                              "
-    LARGEUR_COLONNE = 15
-
-    players = []
+    HEADER = ["Num", "Nom", "Prenom", "Date naissance", "Club"]
+    LARGEURS_COLONNES = [4, 20, 20, 14, 7, 0, 0]
+    joueurs = []
 
     def __init__(self):
         pass
 
-    def print_vue(self, joueurs_fichier, selection_joueurs):
+    def print_vue(self, liste_joueurs_fichier, liste_selection_joueurs):
         clear_screen()
         print(self.TITRE_VUE)
-        self.print_player_header()
-        self.list_players(joueurs_fichier)
+        self.print_line(self.HEADER, self.LARGEURS_COLONNES)
+        self.print_list(liste_joueurs_fichier, self.LARGEURS_COLONNES)
         self.print_selection_header()
-        self.list_players(selection_joueurs)
+        self.print_list(liste_selection_joueurs, self.LARGEURS_COLONNES)
 
     def list_players(self, joueurs):
-        self.players = joueurs
-        for player in joueurs:
-            self.print_player(player)
-
-    def print_player_header(self):
-        print("    |" + "Nom" + self.SPACES[0:self.LARGEUR_COLONNE-3] + "|"
-              + "Prenom" + self.SPACES[0:self.LARGEUR_COLONNE-6] + "|"
-              + "Date de naissance|"
-              + "Club"+"\n")
+        self.joueurs = joueurs
+        for joueur in joueurs:
+            elements = joueurs.to_list()
+            self.print_line(elements, self.LARGEURS_COLONNES)
 
     def print_selection_header(self):
         print("\nJOUEURS SELECTIONNES :\n")
@@ -93,15 +62,3 @@ class PlayerSelectionView:
     def select_players(self):
         selection = input("\nNuméro d'un joueurs à sélectionner (Entrée pour quitter la sélection) : ")
         return selection
-
-
-class TournamentSummaryView(Commons):
-    '''Résume les paramètres entrés pour le tournoi'''
-
-    def __init__(self):
-        pass
-
-    def print_summary(self, tournament):
-        clear_screen()
-        for joueur in tournament.players:
-            self.print_player(joueur)

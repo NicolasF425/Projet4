@@ -8,8 +8,7 @@ class Match:
 
     '''Met a jour le score des joueurs et termine le match'''
     def set_resultat(self, score_player1, score_player2):
-        resultat = ([self.scores_joueurs[0][0], score_player1],
-                  [self.scores_joueurs[1][0], score_player2])
+        resultat = ([self.scores_joueurs[0][0], score_player1], [self.scores_joueurs[1][0], score_player2])
         self.scores_joueurs = resultat
         self.est_fini = True
 

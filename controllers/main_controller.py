@@ -5,9 +5,10 @@ from controllers.tournament_controller import TournamentController
 
 
 class MainController:
+    '''Classe pour la gestion du menu principal'''
 
-    ELEMENTS_MENU = ["1/ Gestion des joueurs\n", "2/ Gestion des tournois\n", "3/ Quitter\n"]
-    QUITTER = 3
+    ELEMENTS_MENU = ["1/ Gestion des joueurs\n", "2/ Gestion des tournois\n", "3/ Rapports\n", "4/ Quitter\n"]
+    QUITTER = 4
 
     def __init__(self):
         self.view = MainView(self.ELEMENTS_MENU)
@@ -27,4 +28,6 @@ class MainController:
                 tournament_controller = TournamentController()
                 while retour is not tournament_controller.RETOUR:
                     retour = tournament_controller.manage_input()
+            if choix == 3:
+                retour = 0
         sys.exit(1)

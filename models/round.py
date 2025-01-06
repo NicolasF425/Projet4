@@ -20,7 +20,11 @@ class Round:
     def to_dict(self):
         return {
             "Nom": self.nom,
-            "matchs": [match.to_dict() for match in self.matchs]
+            "matchs": [match.to_dict() for match in self.matchs],
+            "joueurs": [player.to_dict() for player in self.joueurs],
+            "date_heure_debut": self.date_heure_debut,
+            "date_heure_fin": self.date_heure_fin,
+            "est_fini": self.est_fini
         }
 
     def check_all_matchs_finished(self):

@@ -1,17 +1,16 @@
 from time import sleep
-from datetime import date
 from os import path
 from models.player import Player
-from views.player_view import PlayerView, AddPlayerView, ListPlayersView, ExportPlayersView
+from views.player_view import PlayerView, AddPlayerView, ListPlayersView
 from utilities import players_manager as pm
+from utilities import constantes
 
 
 class PlayerController:
 
-    FILENAME = "joueurs.json"
-    ELEMENTS_MENU = ["1/ Créer un nouveau joueur\n", "2/ lister les joueurs\n", "3/ Exporter la liste des joueurs\n",
-                     "4/ RETOUR\n"]
-    RETOUR = 4
+    FICHIER_JOUEURS = constantes.FICHIER_JOUEURS
+    ELEMENTS_MENU = ["1/ Créer un nouveau joueur\n", "2/ lister les joueurs\n", "3/ Retour\n"]
+    RETOUR = len(ELEMENTS_MENU)
 
     def __init__(self):
         self.view = PlayerView(self.ELEMENTS_MENU)
@@ -32,21 +31,14 @@ class PlayerController:
         # Liste des joueurs par ordre alphabetique
         if choix == 2:
             view = ListPlayersView()
-            joueurs = pm.load_players(self.FILENAME)
+            joueurs = pm.load_players(self.FICHIER_JOUEURS)
             if joueurs is not None:
                 joueurs = self.sort_by_name(joueurs)
-                view.list_players(joueurs)
+                listes_joueurs = []
+                for joueur in joueurs:
+                    listes_joueurs.append(joueur.to_list())
+                view.list_players(listes_joueurs)
             input("\nAppuyez sur entrée...")
-
-        # Export dans un fichier txt des joueurs par ordre alphabetique
-        if choix == 3:
-            joueurs = pm.load_players(self.FILENAME)
-            joueurs = self.sort_by_name(joueurs)
-            fichier_export = "Joueurs_au_"+date.today().strftime("%d%m%Y")+".txt"
-            view = ExportPlayersView()
-            ok = pm.export_players(fichier_export, joueurs)
-            if ok is True:
-                view.print_export(len(joueurs))
 
         # Retour
         if choix == self.RETOUR:
@@ -61,22 +53,22 @@ class PlayerController:
             # on recupere la liste des joueurs du fichier
             players = []
             prochain_numero = 1
-            if path.exists(self.FILENAME) is True:
-                players = pm.load_players(self.FILENAME)
+            if path.exists(self.FICHIER_JOUEURS) is True:
+                players = pm.load_players(self.FICHIER_JOUEURS)
                 prochain_numero = len(players) + 1
             # on ajoute le nouveau joueur a la liste
             player.numero_joueur = prochain_numero
             players.append(player)
             # on met a jour le fichier des joueurs
-            pm.save_players(players, self.FILENAME)
+            pm.save_players(players, self.FICHIER_JOUEURS)
             sleep(2)
         except Exception as e:
             print(f"Erreur de fichier : {e}")
 
     def list_players(self):
         try:
-            if path.exists(self.FILENAME) is True:
-                players = pm.load_players(self.FILENAME)
+            if path.exists(self.FICHIER_JOUEURS) is True:
+                players = pm.load_players(self.FICHIER_JOUEURS)
                 return players
         except Exception as e:
             print(f"Erreur de recuperation des joueurs : {e}")
@@ -103,7 +95,7 @@ class PlayerController:
 
     def check_identifiant_club(self, identifiant_club):
         longueur = len(identifiant_club)
-        if longueur == 0 or longueur > 7:
+        if longueur < 7 or longueur > 7:
             print("Identifiant du club mal formaté !")
             return False
         return True
@@ -125,5 +117,6 @@ class PlayerController:
         return False
 
     def sort_by_name(self, players):
+        '''Trie les joueurs par nom et par ordre alphabétique'''
         sorted_players = sorted(players, key=lambda player: player.nom)
         return sorted_players

@@ -2,16 +2,17 @@ from views.tournament_view import TournamentView, NewTournamentView, PlayerSelec
 from models.tournament import Tournament
 from utilities import players_manager as pm
 from utilities import tournaments_manager as tm
+from utilities import constantes
 from time import sleep
 from random import shuffle
 
 
 class TournamentController:
 
-    FICHIER_JOUEURS = "joueurs.json"
-    FICHIER_TOURNOIS = "tournois.json"
+    FICHIER_JOUEURS = constantes.FICHIER_JOUEURS
+    FICHIER_TOURNOIS = constantes.FICHIER_TOURNOIS
     ELEMENTS_MENU = ["1/ Créer un nouveau tournoi\n", "2/ Mettre à jour un tournoi\n", "3/ Lister les tournois\n",
-                     "4/ RETOUR\n"]
+                     "4/ Retour\n"]
     RETOUR = 4
 
     def __init__(self):
@@ -57,30 +58,51 @@ class TournamentController:
         if int(datas[4]) > 0:
             tournoi.nombre_de_rounds = int(datas[4])
         tournoi.description = datas[5]
+
         # si ok on passe a la selection des joueurs
         view = PlayerSelectionView()
         selection_ok = False
         # on charge tous les joueurs du fichier json
         tous_joueurs = pm.load_players(self.FICHIER_JOUEURS)
         selection_joueurs = []
+        tous_joueurs_elements = []
+        selection_joueurs_elements = []
+        for joueur in tous_joueurs:
+            tous_joueurs_elements.append(joueur.to_list())
         while selection_ok is False:
-            view.print_vue(tous_joueurs, selection_joueurs)
+            view.print_vue(tous_joueurs_elements, selection_joueurs_elements)
             numero_choisi = view.select_players()
+            # si le numero est vide on termine la sélection
             if numero_choisi == "":
                 selection_ok = True
             else:
+                next = False
                 numero_choisi = int(numero_choisi)
-                # on met a jour les listes de joueurs affichees
+                # on met a jour les listes de joueurs
+                # on teste si le numero entré est dans la liste générale
+                # puis dans la liste de sélection s'il n'y est pass
                 i = 0
                 for joueur in tous_joueurs:
                     if joueur.numero_joueur == numero_choisi:
                         joueur = tous_joueurs[i]
                         selection_joueurs.append(joueur)
+                        selection_joueurs_elements.append(joueur.to_list())
                         del tous_joueurs[i]
-                    i += 1
+                        del tous_joueurs_elements[i]
+                        next = True
+                        break
+                j = 0
+                if next is not True:
+                    for joueur in selection_joueurs:
+                        if joueur.numero_joueur == numero_choisi:
+                            tous_joueurs.append(joueur)
+                            del selection_joueurs[j]
+                            tous_joueurs_elements.append(joueur.to_list())
+                            del selection_joueurs_elements[j]
+                            break
+
         tournoi.joueurs = selection_joueurs
         self.shuffle_players(selection_joueurs)
-        tournois = []
         tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
         # si pas de tournois a charger
         if tournois is None:

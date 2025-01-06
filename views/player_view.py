@@ -1,5 +1,6 @@
 from utilities.clear_screen import clear_screen
 from views.menu_view import MenuView
+from views.list_view import List_view
 
 
 class PlayerView(MenuView):
@@ -37,56 +38,19 @@ class AddPlayerView:
         return self.datas_player
 
 
-class ListPlayersView:
+class ListPlayersView(List_view):
     '''Vue pour la liste des joueurs'''
 
-    TITRE_VUE = "LISTE DES JOUEURS\n-----------------\n"
-    SPACES = "                              "
-    LARGEUR_COLONNE = 15
+    TITRE_VUE = "LISTE DES JOUEURS PAR ORDRE ALPHABETIQUE\n----------------------------------------\n"
+    HEADER = ["Num", "Nom", "Prenom", "Date naissance", "Club"]
+    LARGEURS_COLONNES = [4, 20, 20, 14, 7, 0, 0]
 
     def __init__(self):
         clear_screen()
         print(self.TITRE_VUE)
 
-    def list_players(self, players):
-        self.print_player_header()
-        for player in players:
-            self.print_player(player)
-
-    def print_player_header(self):
-        print("Nom" + self.SPACES[0:self.LARGEUR_COLONNE-3] + "|"
-              + "Prenom" + self.SPACES[0:self.LARGEUR_COLONNE-6] + "|"
-              + "Date de naissance|"
-              + "Club"+"\n")
-
-    def print_player(self, player):
-        temp_nom = player.nom
-        temp_prenom = player.prenom
-        delta_nom = len(temp_nom)-self.LARGEUR_COLONNE
-        delta_prenom = len(temp_prenom)-self.LARGEUR_COLONNE
-        if delta_nom < 0:   # nom plus court que largeur colonne
-            temp_nom = temp_nom + self.SPACES[0:-delta_nom]
-        else:
-            temp_nom = temp_nom[0:self.LARGEUR_COLONNE]
-
-        if delta_prenom < 0:
-            temp_prenom = temp_prenom + self.SPACES[0:-delta_prenom]
-        else:
-            temp_prenom = temp_prenom[0:self.LARGEUR_COLONNE]
-
-        print(temp_nom + "|" +
-              temp_prenom + "|" +
-              player.date_de_naissance + "       |" +
-              player.identifiant_club)
-
-
-class ExportPlayersView:
-    '''Vue de l'export des joueurs vers un fichier txt'''
-
-    def __init__(self):
-        clear_screen()
-        print("Export en cours...")
-
-    def print_export(self, nombre_joueurs):
-        print(str(nombre_joueurs) + "joueur(s) exporté(s)\n")
-        input("\nAppuyez sur entrée...")
+    def list_players(self, listes_joueurs):
+        self.print_line(self.HEADER, self.LARGEURS_COLONNES)
+        print("\n")
+        for joueurs in listes_joueurs:
+            self.print_line(joueurs, self.LARGEURS_COLONNES)
