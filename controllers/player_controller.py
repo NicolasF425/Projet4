@@ -31,14 +31,17 @@ class PlayerController:
         # Liste des joueurs par ordre alphabetique
         if choix == 2:
             view = ListPlayersView()
-            joueurs = pm.load_players(self.FICHIER_JOUEURS)
-            if joueurs is not None:
-                joueurs = self.sort_by_name(joueurs)
-                listes_joueurs = []
-                for joueur in joueurs:
-                    listes_joueurs.append(joueur.to_list())
-                view.list_players(listes_joueurs)
-            input("\nAppuyez sur entrée...")
+            if path.exists(self.FICHIER_JOUEURS) is True:
+                joueurs = pm.load_players(self.FICHIER_JOUEURS)
+                if joueurs is not None:
+                    joueurs = self.sort_by_name(joueurs)
+                    listes_infos_joueurs = []
+                    for joueur in joueurs:
+                        listes_infos_joueurs.append(joueur.to_list())
+                    view.list_players(listes_infos_joueurs)
+            else:
+                print("Fichier des joueurs non trouvé")
+                sleep(2)
 
         # Retour
         if choix == self.RETOUR:
@@ -64,15 +67,6 @@ class PlayerController:
             sleep(2)
         except Exception as e:
             print(f"Erreur de fichier : {e}")
-
-    def list_players(self):
-        try:
-            if path.exists(self.FICHIER_JOUEURS) is True:
-                players = pm.load_players(self.FICHIER_JOUEURS)
-                return players
-        except Exception as e:
-            print(f"Erreur de recuperation des joueurs : {e}")
-            return None
 
     def check_nom(self, nom):
         if nom == "":

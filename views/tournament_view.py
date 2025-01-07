@@ -31,6 +31,31 @@ class NewTournamentView:
         return datas_tournament
 
 
+class ListTournamentsView(List_view):
+
+    TITRE_VUE = "LISTE DES TOURNOIS\n------------------\n"
+    HEADER = ["Num", "Nom", "Lieu", "Date début", "date fin", "Description"]
+    LARGEURS_COLONNES = [4, 20, 20, 10, 10, 80]
+
+    def __init__(self):
+        '''retour = 0 si pas sélection affichage simple'''
+        '''retour = 1 si sélection dans la liste'''
+        clear_screen()
+        print(self.TITRE_VUE)
+
+    def list_tournaments(self, listes_tournois, retour=""):
+        self.print_line(self.HEADER, self.LARGEURS_COLONNES)
+        print("\n")
+        for tournoi in listes_tournois:
+            self.print_line(tournoi, self.LARGEURS_COLONNES)
+        if retour == "":
+            input("\nAppuyez sur entrée...")
+            return retour
+        else:
+            retour = input("\nSélectionner le tournoi numéro: ")
+            return retour
+
+
 class PlayerSelectionView(List_view):
     '''Vue pour la selection des joueurs'''
 

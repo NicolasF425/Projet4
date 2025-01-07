@@ -49,8 +49,9 @@ class ListPlayersView(List_view):
         clear_screen()
         print(self.TITRE_VUE)
 
-    def list_players(self, listes_joueurs):
+    def list_players(self, listes_infos_joueurs):
         self.print_line(self.HEADER, self.LARGEURS_COLONNES)
         print("\n")
-        for joueurs in listes_joueurs:
-            self.print_line(joueurs, self.LARGEURS_COLONNES)
+        for infos_joueurs in listes_infos_joueurs:
+            self.print_line(infos_joueurs, self.LARGEURS_COLONNES)
+        input("\nAppuyez sur entrée...")

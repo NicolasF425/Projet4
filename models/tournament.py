@@ -52,6 +52,9 @@ class Tournament:
             "numero_tournoi": self.numero_tournoi
         }
 
+    def to_list(self):
+        return [self.numero_tournoi, self.nom, self.lieu, self.date_debut, self.date_fin, self.description]
+
     def sort_players_by_score(self):
         self.joueurs = self.joueurs.sort(key=lambda player: player.nom)
 

@@ -1,2 +1,2 @@
-FICHIER_JOUEURS = "joueurs.json"
-FICHIER_TOURNOIS = "tournois.json"
+FICHIER_JOUEURS = "datas/players/joueurs.json"
+FICHIER_TOURNOIS = "datas/tournaments/tournois.json"

@@ -1,7 +1,7 @@
 class List_view:
     '''Classe pour l'affichage d'un menu dans une vue'''
 
-    SPACES = "                              "
+    SPACES = "                                                                                "
     largeurs_colonnes = []
 
     def __init__(self):
