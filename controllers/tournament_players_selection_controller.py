@@ -1,6 +1,7 @@
 from views.tournament_view import PlayerSelectionView
 from utilities import players_manager as pm, tournaments_manager as tm
 from time import sleep
+from utilities import constantes
 
 
 class TournamentPlayersSelectionController:
@@ -11,10 +12,10 @@ class TournamentPlayersSelectionController:
     def select_tournament_players(self, tournoi):
         '''Gestion de la sélection des joueurs pour un tournoi'''
 
-        view = PlayerSelectionView(tournoi)
+        view = PlayerSelectionView()
         selection_ok = False
         # on charge tous les joueurs du fichier json
-        tous_joueurs = pm.load_players(self.FICHIER_JOUEURS)
+        tous_joueurs = pm.load_players(constantes.FICHIER_JOUEURS)
         selection_joueurs = []
         tous_joueurs_elements = []
         selection_joueurs_elements = []
@@ -53,14 +54,11 @@ class TournamentPlayersSelectionController:
                             break
 
         tournoi.joueurs = selection_joueurs
-        self.shuffle_players(selection_joueurs)
-        tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
-        # si pas de tournois a charger
-        if tournois is None:
-            tournois = []
-            tournoi.set_numero_tournoi(1)
-        else:
-            tournoi.set_numero_tournoi(len(tournois)+1)
-        tournois.append(tournoi)
-        tm.save_tournaments(tournois, self.FICHIER_TOURNOIS)
-        sleep(2)
+        # self.shuffle_players(selection_joueurs)
+        tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
+        if tournois is not None:
+            for t in tournois:
+                if t.numero_tournoi == tournoi.numero_tournoi:
+                    t.joueurs = tournoi.joueurs
+            tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
+            sleep(2)

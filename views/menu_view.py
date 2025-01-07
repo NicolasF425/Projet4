@@ -9,16 +9,18 @@ class MenuView:
         self.elements_menu = elements_menu
         self.nb_elements = len(elements_menu)
 
-    def print_view(self):
-        clear_screen()
-        print(self.titre_vue)
+    def print_view(self, nocls=False, title=True):
+        if nocls is False:
+            clear_screen()
+        if title is True:
+            print(self.titre_vue)
         for item in self.elements_menu:
             print(item)
 
-    def input_choice(self):
+    def input_choice(self, nocls=False, title=True):
         choix_ok = False
         while choix_ok is False:
-            self.print_view()
+            self.print_view(nocls, title)
             choix = input("\nSélectioner : ")
             choix_ok = self.check_choix(choix)
         return int(choix)

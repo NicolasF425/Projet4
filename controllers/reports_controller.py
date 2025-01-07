@@ -1,7 +1,7 @@
 from time import sleep
 from os import path
 from utilities import constantes
-from views.reports_view import ReportsView, ReportPlayersList, ReportTournamentsList
+from views.reports_view import ReportsMenuView, ReportPlayersList, ReportTournamentsList
 from utilities import players_manager as pm, tournaments_manager as tm
 
 
@@ -13,7 +13,7 @@ class ReportController:
     RETOUR = len(ELEMENTS_MENU)
 
     def __init__(self):
-        self.view = ReportsView(self.ELEMENTS_MENU)
+        self.view = ReportsMenuView(self.ELEMENTS_MENU)
         self.view.print_view()
 
     def manage_input(self):

@@ -1,9 +1,9 @@
 from utilities.clear_screen import clear_screen
 from views.menu_view import MenuView
-from views.list_view import List_view
+from views.list_view import ListView
 
 
-class PlayerView(MenuView):
+class PlayerMenuView(MenuView):
     '''Vue du menu de gestion des joueurs'''
 
     TITRE_VUE = "GESTION DES JOUEURS\n-------------------\n"
@@ -38,7 +38,7 @@ class AddPlayerView:
         return self.datas_player
 
 
-class ListPlayersView(List_view):
+class ListPlayersView(ListView):
     '''Vue pour la liste des joueurs'''
 
     TITRE_VUE = "LISTE DES JOUEURS PAR ORDRE ALPHABETIQUE\n----------------------------------------\n"

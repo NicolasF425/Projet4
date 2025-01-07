@@ -3,7 +3,7 @@ from views.player_view import ListPlayersView
 from views.tournament_view import ListTournamentsView
 
 
-class ReportsView(MenuView):
+class ReportsMenuView(MenuView):
     '''Vue du menu de gestion des rapports'''
 
     TITRE_VUE = "RAPPORTS\n-------------------\n"

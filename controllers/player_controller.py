@@ -1,7 +1,7 @@
 from time import sleep
 from os import path
 from models.player import Player
-from views.player_view import PlayerView, AddPlayerView, ListPlayersView
+from views.player_view import PlayerMenuView, AddPlayerView, ListPlayersView
 from utilities import players_manager as pm
 from utilities import constantes
 
@@ -13,7 +13,7 @@ class PlayerController:
     RETOUR = len(ELEMENTS_MENU)
 
     def __init__(self):
-        self.view = PlayerView(self.ELEMENTS_MENU)
+        self.view = PlayerMenuView(self.ELEMENTS_MENU)
         self.view.print_view()
 
     def manage_input(self):

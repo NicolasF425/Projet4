@@ -1,4 +1,4 @@
-class List_view:
+class ListView:
     '''Classe pour l'affichage d'un menu dans une vue'''
 
     SPACES = "                                                                                "

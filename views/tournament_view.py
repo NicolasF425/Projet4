@@ -1,9 +1,9 @@
 from utilities.clear_screen import clear_screen
 from views.menu_view import MenuView
-from views.list_view import List_view
+from views.list_view import ListView
 
 
-class TournamentView(MenuView):
+class TournamentMenuView(MenuView):
     '''Vue du menu de gestion des tournois'''
 
     TITRE_VUE = "GESTION DES TOURNOIS\n--------------------\n"
@@ -12,6 +12,42 @@ class TournamentView(MenuView):
         self.titre_vue = self.TITRE_VUE
         self.elements_menu = elements_menu
         self.nb_elements = len(elements_menu)
+
+
+class TournamentDisplayView(ListView, MenuView):
+
+    TITRE_VUE = "MODIFIER LE TOURNOI\n"
+
+    def __init__(self, elements_menu):
+        self.titre_vue = self.TITRE_VUE
+        self.elements_menu = elements_menu
+        self.nb_elements = len(elements_menu)
+
+    def print_tournament(self, tournament_infos, players_infos):
+        clear_screen()
+        print(self.TITRE_VUE)
+        self.print_tournament_infos(tournament_infos)
+        print("\n")
+        self.print_tournament_players_infos(players_infos)
+        print("\n")
+
+    def print_tournament_infos(self, tournament_infos):
+        if type(tournament_infos) is list:
+            if len(tournament_infos) == 6:
+                print("Numéro : ",  tournament_infos[0])
+                print("Nom : ", tournament_infos[1])
+                print("Lieu : ", tournament_infos[2])
+                print("Date de début : ", tournament_infos[3])
+                print("Date de fin", tournament_infos[4])
+                print("Description : ", tournament_infos[5])
+        else:
+            print("Données tournoi insuffisantes")
+
+    def print_tournament_players_infos(self, players_infos):
+        HEADER = ["Num", "Nom", "Prenom", "Date naissance", "Club"]
+        LARGEURS_COLONNES = [4, 20, 20, 14, 7, 0, 0]
+        self.print_line(HEADER, LARGEURS_COLONNES)
+        self.print_list(players_infos, LARGEURS_COLONNES)
 
 
 class NewTournamentView:
@@ -31,7 +67,7 @@ class NewTournamentView:
         return datas_tournament
 
 
-class ListTournamentsView(List_view):
+class ListTournamentsView(ListView):
 
     TITRE_VUE = "LISTE DES TOURNOIS\n------------------\n"
     HEADER = ["Num", "Nom", "Lieu", "Date début", "date fin", "Description"]
@@ -56,7 +92,7 @@ class ListTournamentsView(List_view):
             return retour
 
 
-class PlayerSelectionView(List_view):
+class PlayerSelectionView(ListView):
     '''Vue pour la selection des joueurs'''
 
     TITRE_VUE = "SELECTION DES JOUEURS\n---------------------\n"

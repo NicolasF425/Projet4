@@ -1,5 +1,6 @@
-from views.tournament_view import TournamentView, NewTournamentView, ListTournamentsView
 from models.tournament import Tournament
+from views.tournament_view import TournamentMenuView, NewTournamentView, ListTournamentsView, TournamentDisplayView
+from controllers.tournament_players_selection_controller import TournamentPlayersSelectionController
 from utilities import tournaments_manager as tm
 from utilities import constantes
 from time import sleep
@@ -15,8 +16,11 @@ class TournamentController:
                      "4/ Retour\n"]
     RETOUR = 4
 
+    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueur\n", "2/ gérer les rounds\n", "3/ Retour\n"]
+    RETOUR_MENU_MOD_TOURNOI = len(ELEMENTS_MENU)
+
     def __init__(self):
-        self.view = TournamentView(self.ELEMENTS_MENU)
+        self.view = TournamentMenuView(self.ELEMENTS_MENU)
         self.view.print_view()
 
     def manage_input(self):
@@ -29,13 +33,14 @@ class TournamentController:
         # Modification de tournoi existant
         if choix == 2:
             view = ListTournamentsView()
+            numero_tournoi_selectionne = -1
+            tournois = []
             if path.exists(self.FICHIER_TOURNOIS) is True:
                 tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
                 if tournois is not None:
                     listes_infos_tournois = []
                     for infos_tournoi in tournois:
                         listes_infos_tournois.append(infos_tournoi.to_list())
-                    numero_tournoi_selectionne = -1
                     while numero_tournoi_selectionne == -1:
                         numero_tournoi = view.list_tournaments(listes_infos_tournois, "R")
                         if numero_tournoi != "":
@@ -48,9 +53,28 @@ class TournamentController:
                 print("Fichier des tournois non trouvé")
                 sleep(2)
 
-        # Liste des tournois
+            # si un tournoi a été sélectionné, on affiche les données du tournoi et les actions possibles
+            if numero_tournoi_selectionne > 0:
+                choix_action = 0
+                while choix_action == 0:
+                    view = TournamentDisplayView(self.ELEMENTS_MENU_MOD_TOURNOI)
+                    tournoi = tournois[int(numero_tournoi)-1]
+                    infos_joueurs = []
+                    for joueur in tournoi.joueurs:
+                        infos_joueurs.append(joueur.to_list())
+                    view.print_tournament(tournoi.to_list(), infos_joueurs)
+                    choix_action = view.input_choice(nocls=True, title=False)
+
+                if choix_action == self.RETOUR_MENU_MOD_TOURNOI:
+                    choix = self.RETOUR
+                # modification de la liste des joueurs du tournoi
+                if choix_action == 1:
+                    controlleur = TournamentPlayersSelectionController()
+                    controlleur.select_tournament_players(tournoi)
+
+        # Liste les tournois
         if choix == 3:
-            view = ListTournamentsView()
+            view = ListTournamentsView(self.ELEMENTS_MENU_MOD_TOURNOI)
             if path.exists(self.FICHIER_TOURNOIS) is True:
                 tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
                 if tournois is not None:
@@ -88,7 +112,7 @@ class TournamentController:
             tournoi.nombre_de_rounds = int(datas[4])
         tournoi.description = datas[5]
 
-    # SAUVEGARDE DU TOURNOI CREE
+        # sauvegarde du tournoi créé
         tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
         # si pas de tournois a charger
         if tournois is None:
