@@ -81,6 +81,7 @@ class TournamentPlayersSelectionController:
                     print("Vous devez entrer un numéro !")
                     sleep(2)
 
+        # on met a jour le fichier des tournois
         tournoi.joueurs = selection_joueurs
         tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
         if tournois is not None:

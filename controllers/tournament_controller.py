@@ -5,7 +5,6 @@ from utilities import tournaments_manager as tm
 from utilities import constantes
 from time import sleep
 from os import path
-from random import shuffle
 
 
 class TournamentController:
@@ -16,7 +15,8 @@ class TournamentController:
                      "4/ Retour\n"]
     RETOUR = 4
 
-    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ gérer les rounds\n", "3/ Retour\n"]
+    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ Lancer le tournoi\n",
+                                 "3/ gérer les rounds\n", "4/ Retour\n"]
     RETOUR_MENU_MOD_TOURNOI = len(ELEMENTS_MENU)
 
     def __init__(self):
@@ -65,12 +65,18 @@ class TournamentController:
                     view.print_tournament(tournoi.to_list(), infos_joueurs)
                     choix_action = view.input_choice(nocls=True, title=False)
 
+                # dernier choix > retour
                 if choix_action == self.RETOUR_MENU_MOD_TOURNOI:
                     choix = self.RETOUR
-                # modification de la liste des joueurs du tournoi
-                if choix_action == 1:
+
+                # 1> modification de la liste des joueurs du tournoi
+                if choix_action == 1 and tournoi.en_cours == "False":
                     controlleur = TournamentPlayersSelectionController()
                     controlleur.select_tournament_players(tournoi)
+                else:
+                    print("Tournoi commencé, modification de la liste des joueurs impossible !")
+                if choix_action == 2:
+                    pass
 
         # Liste les tournois
         if choix == 3:
@@ -184,12 +190,3 @@ class TournamentController:
             return True
         sleep(2)
         return False
-
-    def shuffle_players(self, joueurs):
-        '''Melange la liste des joueurs et attribue un numero de joueur pour le tournoi'''
-        shuffle(joueurs)
-        i = 1
-        for joueur in joueurs:
-            joueur.numero_en_tournoi = i
-            i += 1
-        return joueurs

@@ -4,21 +4,29 @@ from models.match import Match
 class Round:
 
     def __init__(self, joueurs):
+        self.numero = 1
         self.nom = ""
         self.matchs = []
         self.joueurs = joueurs
-        self.date_heure_debut = None
-        self.date_heure_fin = None
-        self.est_fini = False
+        self.date_heure_debut = ""
+        self.date_heure_fin = ""
+        self.est_fini = "False"
 
     def set_name(self, name):
         self.nom = name
+
+    def set_date_heure_debut(self, date_heure_debut):
+        self.date_heure_debut = date_heure_debut
+
+    def set_date_heure_fin(self, date_heure_fin):
+        self.date_heure_fin = date_heure_fin
 
     def add_match(self, match):
         self.matchs.append(match)
 
     def to_dict(self):
         return {
+            "Numero": self.numero,
             "Nom": self.nom,
             "matchs": [match.to_dict() for match in self.matchs],
             "joueurs": [player.to_dict() for player in self.joueurs],
