@@ -15,7 +15,7 @@ class RoundsController:
     def init_round1(self):
         '''Tour 1 : on mélange les joueurs et on leur attribue un numero de participant'''
         joueurs = self.tournoi.joueurs
-        shuffle(joueurs)
+        joueurs = self.shuffle_players(joueurs)
         matchs = self.pair_players_round1(joueurs)
         maintenant = datetime.now()
         date_heure = maintenant.strftime("%d/%m/%Y, %H:%M%S")
