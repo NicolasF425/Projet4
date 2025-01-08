@@ -16,7 +16,7 @@ class TournamentController:
                      "4/ Retour\n"]
     RETOUR = 4
 
-    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueur\n", "2/ gérer les rounds\n", "3/ Retour\n"]
+    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ gérer les rounds\n", "3/ Retour\n"]
     RETOUR_MENU_MOD_TOURNOI = len(ELEMENTS_MENU)
 
     def __init__(self):
@@ -74,7 +74,7 @@ class TournamentController:
 
         # Liste les tournois
         if choix == 3:
-            view = ListTournamentsView(self.ELEMENTS_MENU_MOD_TOURNOI)
+            view = ListTournamentsView()
             if path.exists(self.FICHIER_TOURNOIS) is True:
                 tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
                 if tournois is not None:
