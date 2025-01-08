@@ -1,6 +1,7 @@
 from models.tournament import Tournament
 from views.tournament_view import TournamentMenuView, NewTournamentView, ListTournamentsView, TournamentDisplayView
 from controllers.tournament_players_selection_controller import TournamentPlayersSelectionController
+from controllers.rounds_controller import RoundsController
 from utilities import tournaments_manager as tm
 from utilities import constantes
 from time import sleep
@@ -9,8 +10,6 @@ from os import path
 
 class TournamentController:
 
-    FICHIER_JOUEURS = constantes.FICHIER_JOUEURS
-    FICHIER_TOURNOIS = constantes.FICHIER_TOURNOIS
     ELEMENTS_MENU = ["1/ Créer un nouveau tournoi\n", "2/ Mettre à jour un tournoi\n", "3/ Lister les tournois\n",
                      "4/ Retour\n"]
     RETOUR = 4
@@ -35,8 +34,8 @@ class TournamentController:
             view = ListTournamentsView()
             numero_tournoi_selectionne = -1
             tournois = []
-            if path.exists(self.FICHIER_TOURNOIS) is True:
-                tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
+            if path.exists(constantes.FICHIER_TOURNOIS) is True:
+                tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
                 if tournois is not None:
                     listes_infos_tournois = []
                     for infos_tournoi in tournois:
@@ -70,19 +69,27 @@ class TournamentController:
                     choix = self.RETOUR
 
                 # 1> modification de la liste des joueurs du tournoi
-                if choix_action == 1 and tournoi.en_cours == "False":
-                    controlleur = TournamentPlayersSelectionController()
-                    controlleur.select_tournament_players(tournoi)
-                else:
-                    print("Tournoi commencé, modification de la liste des joueurs impossible !")
+                if choix_action == 1:
+                    if tournoi.en_cours == "False":
+                        controlleur = TournamentPlayersSelectionController()
+                        controlleur.select_tournament_players(tournoi)
+                    else:
+                        print("Tournoi commencé, modification de la liste des joueurs impossible !")
+
+                # 2> lancement du tournoi
                 if choix_action == 2:
-                    pass
+                    reponse = input("Lancer le tournoi ? Cela bloquera la liste des joueurs et initialisera le "
+                                    "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                    "ou appuyez sur Entrée pour annuler : ")
+                    if reponse == "oui":
+                        controlleur = RoundsController(tournoi)
+                        controlleur.init_round1()
 
         # Liste les tournois
         if choix == 3:
             view = ListTournamentsView()
-            if path.exists(self.FICHIER_TOURNOIS) is True:
-                tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
+            if path.exists(constantes.FICHIER_TOURNOIS) is True:
+                tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
                 if tournois is not None:
                     listes_infos_tournois = []
                     for infos_tournoi in tournois:
@@ -119,7 +126,7 @@ class TournamentController:
         tournoi.description = datas[5]
 
         # sauvegarde du tournoi créé
-        tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
+        tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
         # si pas de tournois a charger
         if tournois is None:
             tournois = []
@@ -127,7 +134,7 @@ class TournamentController:
         else:
             tournoi.set_numero_tournoi(len(tournois)+1)
         tournois.append(tournoi)
-        tm.save_tournaments(tournois, self.FICHIER_TOURNOIS)
+        tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
         sleep(2)
 
     def check_nom(self, nom):

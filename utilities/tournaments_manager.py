@@ -5,6 +5,7 @@ import json
 from models.tournament import Tournament
 from models.player import Player
 from models.match import Match
+from models.round import Round
 
 
 def save_tournaments(tournaments, filename):
@@ -45,8 +46,9 @@ def load_tournaments(filename):
             # rounds
             liste_rounds = []
             for i in range(0, len(tournament.rounds)):
-                tournament.rounds[i].numero = tournament.rounds[i]["numero"]
-                tournament.rounds[i].nom = tournament.rounds[i]["nom"]
+                round = Round()
+                round.numero = tournament.rounds[i]["numero"]
+                round.nom = tournament.rounds[i]["nom"]
 
                 # matchs du round
                 liste_matchs = []
@@ -60,7 +62,7 @@ def load_tournaments(filename):
                     match.set_resultat(score_joueur1, score_joueur2)
                     match.est_fini = tournament.rounds[i].matchs[j].est_fini
                     liste_matchs.append(match)
-                liste_rounds[i].matchs = liste_matchs
+                round.matchs = liste_matchs
 
                 # joueurs du round
                 liste_joueurs = []
@@ -77,10 +79,11 @@ def load_tournaments(filename):
                                     numero_en_tournoi=numero_en_tournoi, score=score)
                     liste_joueurs.append(joueur)
 
-                tournament.rounds[i].joueurs = liste_joueurs
-                tournament.rounds[i].date_heure_debut = tournament.rounds[i].date_heure_debut
-                tournament.rounds[i].date_heure_fin = tournament.rounds[i].date_heure_debut
-                tournament.rounds[i].est_fini = tournament.rounds[i].est_fini
+                round.joueurs = liste_joueurs
+                round.date_heure_debut = tournament.rounds[i].date_heure_debut
+                round.date_heure_fin = tournament.rounds[i].date_heure_debut
+                round.est_fini = tournament.rounds[i].est_fini
+                liste_rounds.append(round)
             tournament.rounds = liste_rounds
 
         return tournaments
