@@ -115,6 +115,8 @@ class TournamentController:
             view = NewTournamentView()
             datas = view.param_tournament()
             next = self.check_tournament_datas(datas)
+        if next == constantes.ESCAPE:
+            return constantes.ESCAPE
         tournoi.nom = datas[0]
         tournoi.lieu = datas[1]
         tournoi.date_debut = datas[2]
@@ -181,6 +183,8 @@ class TournamentController:
         return test_nombre
 
     def check_tournament_datas(self, tournament_datas):
+        if tournament_datas == constantes.ESCAPE:
+            return constantes.ESCAPE
         '''Vérifie les champs du tournoi'''
         nom = tournament_datas[0]
         lieu = tournament_datas[1]

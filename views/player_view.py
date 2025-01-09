@@ -1,4 +1,5 @@
 from utilities.clear_screen import clear_screen
+from utilities import constantes
 from views.menu_view import MenuView
 from views.list_view import ListView
 
@@ -31,9 +32,17 @@ class AddPlayerView:
     def add_new_player(self):
         print("Creation du nouveau joueur")
         self.nom = input("Nom : ")
+        if self.nom == constantes.ESCAPE:
+            return constantes.ESCAPE
         self.prenom = input("Prenom : ")
+        if self.prenom == constantes.ESCAPE:
+            return constantes.ESCAPE
         self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
+        if self.date_de_naissance == constantes.ESCAPE:
+            return constantes.ESCAPE
         self.identifiant_club = input("identifiant du club :")
+        if self.identifiant_club == constantes.ESCAPE:
+            return constantes.ESCAPE
         self.datas_player = [self.nom, self.prenom, self.date_de_naissance, self.identifiant_club]
         return self.datas_player
 

@@ -22,11 +22,12 @@ class PlayerController:
         # Nouveau joueur
         if choix == 1:
             ok = False
-            while ok is False:
+            while ok is False or ok != constantes.ESCAPE:
                 view = AddPlayerView()
                 player_datas = view.add_new_player()
                 ok = self.check_player_datas(player_datas)
-            self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
+            if ok is True:
+                self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
 
         # Liste des joueurs par ordre alphabetique
         if choix == 2:
@@ -96,6 +97,8 @@ class PlayerController:
 
     # controle si les informations entrees sont celles attendues
     def check_player_datas(self, player_datas):
+        if player_datas == constantes.ESCAPE:
+            return constantes.ESCAPE
         nom = player_datas[0]
         prenom = player_datas[1]
         date_de_naissance = player_datas[2]

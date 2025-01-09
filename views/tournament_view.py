@@ -1,6 +1,7 @@
 from utilities.clear_screen import clear_screen
 from views.menu_view import MenuView
 from views.list_view import ListView
+from utilities import constantes
 
 
 class TournamentMenuView(MenuView):
@@ -58,11 +59,23 @@ class NewTournamentView:
     def param_tournament(self):
         print("CREATION D'UN NOUVEAU TOURNOI\n-----------------------------\n")
         nom = input("Nom :")
+        if nom == constantes.ESCAPE:
+            return constantes.ESCAPE
         lieu = input("Lieu :")
+        if lieu == constantes.ESCAPE:
+            return constantes.ESCAPE
         date_debut = input("Date de début :")
+        if date_debut == constantes.ESCAPE:
+            return constantes.ESCAPE
         date_fin = input("Date de fin :")
+        if date_fin == constantes.ESCAPE:
+            return constantes.ESCAPE
         nombre_de_rounds = input("Nombre de rounds :")
+        if nombre_de_rounds == constantes.ESCAPE:
+            return constantes.ESCAPE
         description = input("Description :")
+        if description == constantes.ESCAPE:
+            return constantes.ESCAPE
         datas_tournament = [nom, lieu, date_debut, date_fin, nombre_de_rounds, description]
         return datas_tournament
 
