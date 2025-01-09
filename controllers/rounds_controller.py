@@ -51,6 +51,38 @@ class RoundsController:
             date_heure = maintenant.strftime("%d/%m/%Y, %H:%M%S")
             round.date_heure_debut = date_heure
 
+    def pair_players_other_round(self, joueurs):
+        # on classe les joueurs par score
+        joueurs = self.order_players_by_score(joueurs)
+        liste_matchs = []
+
+        # tant qu'il y a des joueurs a appairrer
+        while len(joueurs) > 0:
+            match = Match()
+
+            j = 1
+            while len(joueurs) > 0:
+                numero_joueur1 = joueurs[0].numero_en_tournoi
+                joueur_suivant = joueurs[j].numero_en_tournoi
+                # on verifie si le joueur a deja affronte le joueur suivant dans la liste
+                for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1])):
+                    if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1][j]:
+                        j += 1
+                    else:
+                        # si ce n'est pas le cas :
+                        numero_joueur2 = joueur_suivant
+                        match.set_players_numbers(numero_joueur1, numero_joueur2)
+                        del joueurs[0]
+                        del joueurs[j]
+
+            liste_matchs.append(match)
+        return liste_matchs
+
+    def order_players_by_score(self, joueurs):
+        '''Trie les joueurs par score decroissant'''
+        sorted_players = sorted(joueurs, key=lambda player: player.score, reverse=True)
+        return sorted_players
+
     def shuffle_players(self, joueurs):
         '''Melange la liste des joueurs et attribue un numero de joueur pour le tournoi'''
         shuffle(joueurs)
