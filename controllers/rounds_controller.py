@@ -41,8 +41,15 @@ class RoundsController:
                 liste_matchs.append(match)
         return liste_matchs
 
-    def set_scores(self, match):
-        pass
+    def create_other_round(self):
+        rounds_crees = len(self.tournoi.rounds)
+        if len(self.tournoi.nombre_de_rounds > rounds_crees):
+            round = Round()
+            round.numero = rounds_crees + 1
+            round.nom = "Round "+int(round.numero)
+            maintenant = datetime.now()
+            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M%S")
+            round.date_heure_debut = date_heure
 
     def shuffle_players(self, joueurs):
         '''Melange la liste des joueurs et attribue un numero de joueur pour le tournoi'''

@@ -22,5 +22,6 @@ class Match:
             "joueur_1": self.scores_joueurs[0][0],
             "score_joueur_1": self.scores_joueurs[0][1],
             "joueur_2": self.scores_joueurs[1][0],
-            "score_joueur_2": self.scores_joueurs[1][1]
+            "score_joueur_2": self.scores_joueurs[1][1],
+            "est_fini": self.est_fini
         }

@@ -23,8 +23,8 @@ class Round:
 
     def to_dict(self):
         return {
-            "Numero": self.numero,
-            "Nom": self.nom,
+            "numero": self.numero,
+            "nom": self.nom,
             "matchs": [match.to_dict() for match in self.matchs],
             "joueurs": [player.to_dict() for player in self.joueurs],
             "date_heure_debut": self.date_heure_debut,
