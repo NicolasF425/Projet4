@@ -66,3 +66,28 @@ class ReportTournamentPlayersView(ListView):
         for infos_joueurs in listes_infos_joueurs:
             self.print_line(infos_joueurs, self.LARGEURS_COLONNES)
         input("\nAppuyez sur entrée...")
+        print("\n")
+
+
+class ReportTournamentRoundsMatchsView:
+
+    TITRE_VUE = "LISTE DES ROUNDS ET MATCHS\n--------------------------\n"
+
+    def __init__(self):
+        print(self.TITRE_VUE)
+
+    def print_rounds_matchs(self, liste_infos_rounds):
+        indentation = "    "
+        for infos_round in liste_infos_rounds:
+            print(infos_round[1] + "\n")
+
+            for match in infos_round[2]:
+                fini = "non"
+                if match.est_fini == "True":
+                    fini = "oui"
+                print(indentation + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "
+                      + str(match.scores_joueurs[1][0]) + indentation + "scores  : ", str(match.scores_joueurs[0][1])
+                      + " - " + str(match.scores_joueurs[1][1]) + indentation + "Terminé : ", fini)
+            print('\n')
+
+        input("Appuyez sur Entrée...")

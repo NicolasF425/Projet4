@@ -48,7 +48,7 @@ class RoundsController:
             round.numero = rounds_crees + 1
             round.nom = "Round "+int(round.numero)
             maintenant = datetime.now()
-            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M%S")
+            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M:%S")
             round.date_heure_debut = date_heure
 
     def pair_players_other_round(self, joueurs):

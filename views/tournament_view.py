@@ -121,7 +121,7 @@ class PlayerSelectionView(ListView):
         print(self.TITRE_VUE)
         self.print_line(self.HEADER, self.LARGEURS_COLONNES)
         self.print_list(liste_joueurs_fichier, self.LARGEURS_COLONNES)
-        self.print_selection_header()
+        self.print_selection_header(len(liste_selection_joueurs))
         self.print_list(liste_selection_joueurs, self.LARGEURS_COLONNES)
 
     def list_players(self, joueurs):
@@ -130,8 +130,12 @@ class PlayerSelectionView(ListView):
             elements = joueurs.to_list()
             self.print_line(elements, self.LARGEURS_COLONNES)
 
-    def print_selection_header(self):
-        print("\nJOUEURS SELECTIONNES :\n")
+    def print_selection_header(self, nombre=0):
+        if nombre > 0:
+            n = str(nombre)
+        else:
+            n = ""
+        print("\nJOUEURS SELECTIONNES : "+n+"\n")
 
     def select_players(self):
         selection = input("\nNuméro d'un joueurs à sélectionner (Entrée pour quitter la sélection) : ")

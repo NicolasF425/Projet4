@@ -1,7 +1,8 @@
 from time import sleep
 from os import path
 from utilities import constantes
-from views.reports_view import ReportsMenuView, ReportPlayersList, ReportTournamentsList, ReportTournamentPlayersView
+from views.reports_view import ReportsMenuView, ReportPlayersList, ReportTournamentsList
+from views.reports_view import ReportTournamentPlayersView, ReportTournamentRoundsMatchsView
 from utilities import players_manager as pm, tournaments_manager as tm
 
 
@@ -52,13 +53,25 @@ class ReportController:
                     if retour != "" and retour != constantes.ESCAPE:
                         try:
                             numero_tournoi = int(retour)
-                            joueurs_tournoi = self.sort_by_name(tournois[numero_tournoi].joueurs)
+                            # on enleve 1 car l'indice commence a 0 et les tournois a 1
+                            indice_tournoi = numero_tournoi-1
+                            # affichage des joueurs
+                            joueurs_tournoi = self.sort_by_name(tournois[indice_tournoi].joueurs)
                             listes_infos_joueurs = []
                             for joueur in joueurs_tournoi:
                                 infos_joueur = joueur.to_list()
                                 listes_infos_joueurs.append(infos_joueur)
                             players_view = ReportTournamentPlayersView()
                             players_view.print_player_list(listes_infos_joueurs)
+
+                            # affichage des rounds et des matchs
+                            rounds_view = ReportTournamentRoundsMatchsView()
+                            liste_infos_rounds = []
+                            for round in tournois[indice_tournoi].rounds:
+                                infos_round = round.to_list()
+                                liste_infos_rounds.append(infos_round)
+                            rounds_view.print_rounds_matchs(liste_infos_rounds)
+
                         except ValueError:
                             print("Vous devez entrer un nombre !")
                             sleep(2)

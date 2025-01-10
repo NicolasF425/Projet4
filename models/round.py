@@ -32,6 +32,10 @@ class Round:
             "est_fini": self.est_fini
         }
 
+    def to_list(self):
+        return [self.numero, self.nom, self.matchs, self.joueurs, self.date_heure_debut, self.date_heure_fin,
+                self.est_fini]
+
     def check_all_matchs_finished(self):
         matchs_finis = True
         for match in self.matchs:
