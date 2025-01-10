@@ -55,6 +55,13 @@ class Tournament:
     def to_list(self):
         return [self.numero_tournoi, self.nom, self.lieu, self.date_debut, self.date_fin, self.description]
 
+    def players_to_list(self):
+        liste_joueurs = []
+        for joueur in self.joueurs:
+            datas_joueur = joueur.to_list()
+            liste_joueurs.append(datas_joueur)
+        return liste_joueurs
+
     def sort_players_by_score(self):
         self.joueurs = self.joueurs.sort(key=lambda player: player.nom)
 

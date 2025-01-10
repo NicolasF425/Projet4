@@ -1,7 +1,7 @@
 from time import sleep
 from os import path
 from utilities import constantes
-from views.reports_view import ReportsMenuView, ReportPlayersList, ReportTournamentsList
+from views.reports_view import ReportsMenuView, ReportPlayersList, ReportTournamentsList, ReportTournamentPlayersView
 from utilities import players_manager as pm, tournaments_manager as tm
 
 
@@ -27,8 +27,9 @@ class ReportController:
                 if joueurs is not None:
                     joueurs = self.sort_by_name(joueurs)
                     listes_infos_joueurs = []
-                    for infos_joueur in joueurs:
-                        listes_infos_joueurs.append(infos_joueur.to_list())
+                    for joueur in joueurs:
+                        infos_joueur = joueur.to_list()
+                        listes_infos_joueurs.append(infos_joueur)
                     view.list_players(listes_infos_joueurs)
             else:
                 print("Fichier des joueurs non trouvé")
@@ -36,14 +37,34 @@ class ReportController:
 
         # liste des tournois
         if choix == 2:
+            numero_tournoi = 0
             view = ReportTournamentsList()
             if path.exists(self.FICHIER_TOURNOIS) is True:
                 tournois = tm.load_tournaments(self.FICHIER_TOURNOIS)
+                # s'il y a un ou des tournois
                 if tournois is not None:
                     listes_infos_tournois = []
-                    for infos_tournoi in tournois:
-                        listes_infos_tournois.append(infos_tournoi.to_list())
-                    view.list_tournaments(listes_infos_tournois)
+                    for tournoi in tournois:
+                        infos_tournoi = tournoi.to_list()
+                        listes_infos_tournois.append(infos_tournoi)
+                    retour = view.list_tournaments(listes_infos_tournois)
+                    # si on a choisi un tournoi
+                    if retour != "" and retour != constantes.ESCAPE:
+                        try:
+                            numero_tournoi = int(retour)
+                            joueurs_tournoi = self.sort_by_name(tournois[numero_tournoi].joueurs)
+                            listes_infos_joueurs = []
+                            for joueur in joueurs_tournoi:
+                                infos_joueur = joueur.to_list()
+                                listes_infos_joueurs.append(infos_joueur)
+                            players_view = ReportTournamentPlayersView()
+                            players_view.print_player_list(listes_infos_joueurs)
+                        except ValueError:
+                            print("Vous devez entrer un nombre !")
+                            sleep(2)
+                        except Exception as err:
+                            print(f"Erreur {err} !")
+                            sleep(5)
             else:
                 print("Fichier des tournois non trouvé")
                 sleep(2)
@@ -52,7 +73,7 @@ class ReportController:
         if choix == self.RETOUR:
             return choix
 
-    def sort_by_name(self, players):
+    def sort_by_name(self, joueurs):
         '''Trie les joueurs par nom et par ordre alphabétique'''
-        sorted_players = sorted(players, key=lambda player: player.nom)
+        sorted_players = sorted(joueurs, key=lambda player: player.nom)
         return sorted_players

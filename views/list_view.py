@@ -2,7 +2,6 @@ class ListView:
     '''Classe pour l'affichage d'un menu dans une vue'''
 
     SPACES = "                                                                                "
-    largeurs_colonnes = []
 
     def __init__(self):
         pass

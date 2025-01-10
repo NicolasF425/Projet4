@@ -14,6 +14,7 @@ class MainController:
     def __init__(self):
         self.view = MainView(self.ELEMENTS_MENU)
         self.view.print_view()
+        self.manage_input()
 
     def manage_input(self):
         choix = 0

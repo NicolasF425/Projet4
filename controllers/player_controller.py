@@ -15,6 +15,7 @@ class PlayerController:
     def __init__(self):
         self.view = PlayerMenuView(self.ELEMENTS_MENU)
         self.view.print_view()
+        self.manage_input()
 
     def manage_input(self):
         choix = self.view.input_choice()

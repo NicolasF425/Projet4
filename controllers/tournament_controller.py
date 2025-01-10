@@ -43,6 +43,8 @@ class TournamentController:
                     while numero_tournoi_selectionne == -1:
                         numero_tournoi = view.list_tournaments(listes_infos_tournois, "R")
                         if numero_tournoi != "":
+                            if numero_tournoi == constantes.ESCAPE:
+                                break
                             try:
                                 numero_tournoi_selectionne = int(numero_tournoi)
                             except ValueError:
@@ -75,15 +77,21 @@ class TournamentController:
                         controlleur.select_tournament_players(tournoi)
                     else:
                         print("Tournoi commencé, modification de la liste des joueurs impossible !")
+                        sleep(2)
 
                 # 2> lancement du tournoi
                 if choix_action == 2:
-                    reponse = input("Lancer le tournoi ? Cela bloquera la liste des joueurs et initialisera le "
-                                    "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
-                                    "ou appuyez sur Entrée pour annuler : ")
-                    if reponse == "oui":
-                        controlleur = RoundsController(tournoi)
-                        controlleur.init_round1()
+                    if tournoi.en_cours == "False":
+                        reponse = input("Lancer le tournoi ? Cela bloquera la liste des joueurs et initialisera le "
+                                        "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                        "ou appuyez sur Entrée pour annuler : ")
+                        if reponse == "oui":
+                            tournoi.en_cours = "True"
+                            controlleur = RoundsController(tournoi)
+                            controlleur.init_round1()
+                    elif tournoi.en_cours == "True":
+                        print("Le tournoi est déjà lancé !")
+                        sleep(2)
 
         # Liste les tournois
         if choix == 3:
@@ -92,8 +100,8 @@ class TournamentController:
                 tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
                 if tournois is not None:
                     listes_infos_tournois = []
-                    for infos_tournoi in tournois:
-                        listes_infos_tournois.append(infos_tournoi.to_list())
+                    for tournoi in tournois:
+                        listes_infos_tournois.append(tournoi.to_list())
                     view.list_tournaments(listes_infos_tournois)
             else:
                 print("Fichier des tournois non trouvé")
