@@ -3,7 +3,7 @@ class Match:
     '''Initialise un nouveau match avec les scores à 0'''
     def __init__(self):
         self.scores_joueurs = ([0, 0], [0, 0])
-        self.est_fini = "False"
+        self.est_fini = "Non"
 
     def __repr__(self):
         return f"Match({self.__dict__})"

@@ -4,7 +4,7 @@ from models.match import Match
 class Tournament:
 
     def __init__(self, nom="", lieu="", date_debut="", date_fin="", nombre_de_rounds=4, round_actuel=1, joueurs=[],
-                 tours=[], description="", matrice_des_matchs=[], en_cours="False", numero_tournoi=0):
+                 tours=[], description="", matrice_des_matchs=[], en_cours="Non", numero_tournoi=0):
         self.nom = nom
         self.lieu = lieu
         self.date_debut = date_debut

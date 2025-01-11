@@ -81,15 +81,15 @@ class TournamentController:
 
                 # 2> lancement du tournoi
                 if choix_action == 2:
-                    if tournoi.en_cours == "False":
+                    if tournoi.en_cours == "Non":
                         reponse = input("Lancer le tournoi ? Cela bloquera la liste des joueurs et initialisera le "
                                         "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
                                         "ou appuyez sur Entrée pour annuler : ")
                         if reponse == "oui":
-                            tournoi.en_cours = "True"
+                            tournoi.en_cours = "Oui"
                             controlleur = RoundsController(tournoi)
                             controlleur.init_round1()
-                    elif tournoi.en_cours == "True":
+                    elif tournoi.en_cours == "Oui":
                         print("Le tournoi est déjà lancé !")
                         sleep(2)
 

@@ -18,7 +18,7 @@ class RoundsController:
         joueurs = self.shuffle_players(joueurs)
         matchs = self.pair_players_round1(joueurs)
         maintenant = datetime.now()
-        date_heure = maintenant.strftime("%d/%m/%Y, %H:%M%S")
+        date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
         round1 = Round()
         round1.nom = "Round 1"
         round1.joueurs = joueurs
@@ -48,7 +48,7 @@ class RoundsController:
             round.numero = rounds_crees + 1
             round.nom = "Round "+int(round.numero)
             maintenant = datetime.now()
-            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M:%S")
+            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
             round.date_heure_debut = date_heure
 
     def pair_players_other_round(self, joueurs):

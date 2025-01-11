@@ -10,7 +10,7 @@ class Round:
         self.joueurs = []
         self.date_heure_debut = ""
         self.date_heure_fin = ""
-        self.est_fini = "False"
+        self.est_fini = "Non"
 
     def __repr__(self):
         return f"Round({self.__dict__})"
@@ -37,10 +37,10 @@ class Round:
                 self.est_fini]
 
     def check_all_matchs_finished(self):
-        matchs_finis = True
+        matchs_finis = "Oui"
         for match in self.matchs:
-            if match.is_finished is False:
-                matchs_finis = False
+            if match.is_finished == "Non":
+                matchs_finis = "Non"
                 break
         return matchs_finis
 
