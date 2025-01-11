@@ -12,70 +12,118 @@ class RoundsController:
     def __init__(self, tournoi):
         self.tournoi = tournoi
 
-    def init_round1(self):
+    def init_round(self, numero_round):
         '''Tour 1 : on mélange les joueurs et on leur attribue un numero de participant'''
-        joueurs = self.tournoi.joueurs
-        joueurs = self.shuffle_players(joueurs)
-        matchs = self.pair_players_round1(joueurs)
+        joueurs_round = self.tournoi.joueurs
+
+        # si premier round
+        if numero_round == 1:
+            # melange les joueurs
+            joueurs_round = self.shuffle_players(joueurs_round)
+            # initialisation de la matrice des joueurs deja affrontes
+            liste_de_listes = []
+            for joueur in joueurs_round:
+                liste = []
+                liste.append(joueur.numero_en_tournoi)
+                liste_de_listes.append(liste)
+            self.tournoi.matchs_matrix = liste_de_listes
+            matchs = self.pair_players_round1(joueurs_round)
+
+        # si round 2 ou plus
+        if numero_round > 1 and numero_round <= self.tournoi.nombre_de_rounds:
+            # ordonne les joueurs par scores decroissant
+            joueurs_round = self.order_players_by_score(joueurs_round)
+            matchs = self.pair_players_other_round
+
+        round = Round()
+        round.nom = "Round " + str(numero_round)
+        round.joueurs = joueurs_round
         maintenant = datetime.now()
         date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
-        round1 = Round()
-        round1.nom = "Round 1"
-        round1.joueurs = joueurs
-        round1.set_date_heure_debut(date_heure)
-        round1.matchs = matchs
-        self.tournoi.rounds.append(round1)
+        round.set_date_heure_debut(date_heure)
+        round.matchs = matchs
+        self.tournoi.rounds.append(round)
+
+        # enregistre les modifications
         self.update_tournament()
 
-    def pair_players_round1(self, joueurs):
+    def pair_players_round1(self, joueurs_round):
+        '''Appairage pour le premier round'''
         liste_matchs = []
-        nb_joueurs = len(joueurs)
+
+        # nombre de joueurs
+        nombre_de_joueurs = len(joueurs_round)
+        # parite du nombre de joueurs
         nb_joueurs_pair = True
-        # nb_paires = nb_joueurs/2
-        if nb_joueurs_pair % 2 == 1:
+        nb_paires = int(nombre_de_joueurs/2)
+        if nombre_de_joueurs % 2 == 1:
             nb_joueurs_pair = False
-        for i in range(0, nb_joueurs, 2):
-            if (i+1) < nb_joueurs:
-                match = Match()
-                match.set_players_numbers(joueurs[i].numero_en_tournoi, joueurs[i+1].numero_en_tournoi)
-                liste_matchs.append(match)
-        return liste_matchs
 
-    def create_other_round(self):
-        rounds_crees = len(self.tournoi.rounds)
-        if len(self.tournoi.nombre_de_rounds > rounds_crees):
-            round = Round()
-            round.numero = rounds_crees + 1
-            round.nom = "Round "+int(round.numero)
-            maintenant = datetime.now()
-            date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
-            round.date_heure_debut = date_heure
+        ok = False
+        i = 0
 
-    def pair_players_other_round(self, joueurs):
-        # on classe les joueurs par score
-        joueurs = self.order_players_by_score(joueurs)
-        liste_matchs = []
-
-        # tant qu'il y a des joueurs a appairrer
-        while len(joueurs) > 0:
+        while ok is not True:
             match = Match()
 
-            j = 1
-            while len(joueurs) > 0:
-                numero_joueur1 = joueurs[0].numero_en_tournoi
-                joueur_suivant = joueurs[j].numero_en_tournoi
-                # on verifie si le joueur a deja affronte le joueur suivant dans la liste
-                for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1])):
-                    if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1][j]:
-                        j += 1
-                    else:
-                        # si ce n'est pas le cas :
-                        numero_joueur2 = joueur_suivant
-                        match.set_players_numbers(numero_joueur1, numero_joueur2)
-                        del joueurs[0]
-                        del joueurs[j]
+            numero_joueur1 = joueurs_round[i].numero_en_tournoi
+            numero_joueur2 = joueurs_round[i+1].numero_en_tournoi
 
+            # on met a jour la matrice des affrontements
+            self.tournoi.matchs_matrix[numero_joueur1-1].append(numero_joueur2)
+            self.tournoi.matchs_matrix[numero_joueur2-1].append(numero_joueur1)
+
+            # on affecte les 2 joueurs au match
+            match.set_players_numbers(numero_joueur1, numero_joueur2)
+
+            # si tous les appairages sont faits on stop
+            i += 2
+            if i >= nb_paires*2:
+                ok = True
+
+            # on ajoute le match a la liste
             liste_matchs.append(match)
+
+        # si nombre de joueurs impair le joueur restant obtient 1 point
+        if nb_joueurs_pair is not True:
+            numero_dernier_joueur = joueurs_round[0].numero_en_tournoi
+            self.tournoi.joueurs[numero_dernier_joueur-1].score += 1
+            # on considere qu'il a battu un hypothetique joueur 0
+            self.tournoi.matchs_matrix[numero_dernier_joueur-1].append(0)
+
+        # on renvoi la liste des matchs
+        return liste_matchs
+
+    def pair_players_other_round(self, joueurs):
+        liste_matchs = []
+        match = Match()
+
+        nombre_de_joueurs = len(joueurs)
+        nb_joueurs_pair = True
+        nb_paires = int(nombre_de_joueurs/2)
+        if nombre_de_joueurs % 2 == 1:
+            nb_joueurs_pair = False
+
+        for j in range(0, nb_paires*2, 2):
+            numero_joueur1 = joueurs[j].numero_en_tournoi
+            joueur_suivant = joueurs[j+1].numero_en_tournoi
+            # on verifie si le joueur a deja affronte le joueur suivant dans la liste
+            suivant = 1
+            for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1-1])):
+                # si c'est le cas :
+                if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1-1][j+suivant]:
+                    suivant += 1
+                else:
+                    # si ce n'est pas le cas :
+                    numero_joueur2 = joueur_suivant
+                    match.set_players_numbers(numero_joueur1, numero_joueur2)
+                    del joueurs[j]
+                    del joueurs[j+suivant]
+        liste_matchs.append(match)
+
+        # si nombre de joueurs impair le joueur restant obtient 1 point
+        if nb_joueurs_pair is not True:
+            joueurs[0].score += 1
+
         return liste_matchs
 
     def order_players_by_score(self, joueurs):
@@ -83,14 +131,14 @@ class RoundsController:
         sorted_players = sorted(joueurs, key=lambda player: player.score, reverse=True)
         return sorted_players
 
-    def shuffle_players(self, joueurs):
+    def shuffle_players(self, joueurs_round):
         '''Melange la liste des joueurs et attribue un numero de joueur pour le tournoi'''
-        shuffle(joueurs)
+        shuffle(joueurs_round)
         i = 1
-        for joueur in joueurs:
+        for joueur in joueurs_round:
             joueur.numero_en_tournoi = i
             i += 1
-        return joueurs
+        return joueurs_round
 
     def update_tournament(self):
         tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)

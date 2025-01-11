@@ -72,7 +72,7 @@ class TournamentController:
 
                 # 1> modification de la liste des joueurs du tournoi
                 if choix_action == 1:
-                    if tournoi.en_cours == "False":
+                    if tournoi.en_cours == "Non":
                         controlleur = TournamentPlayersSelectionController()
                         controlleur.select_tournament_players(tournoi)
                     else:
@@ -88,7 +88,7 @@ class TournamentController:
                         if reponse == "oui":
                             tournoi.en_cours = "Oui"
                             controlleur = RoundsController(tournoi)
-                            controlleur.init_round1()
+                            controlleur.init_round(1)
                     elif tournoi.en_cours == "Oui":
                         print("Le tournoi est déjà lancé !")
                         sleep(2)

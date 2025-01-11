@@ -1,6 +1,5 @@
-from utilities import tournaments_manager as tm
-from utilities import constantes
+matrice = [[3,3,3], [4,4,4], [5,5,5]]
+print(matrice)
 
-
-tournaments = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
-print(tournaments)
+matrice[0].append(6)
+print(matrice)
