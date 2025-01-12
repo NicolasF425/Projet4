@@ -53,7 +53,8 @@ class Tournament:
         }
 
     def to_list(self):
-        return [self.numero_tournoi, self.nom, self.lieu, self.date_debut, self.date_fin, self.description]
+        return [self.numero_tournoi, self.nom, self.lieu, self.date_debut, self.date_fin,
+                self.nombre_de_rounds, self.round_actuel, self.en_cours, self.description]
 
     def players_to_list(self):
         liste_joueurs = []
@@ -68,7 +69,3 @@ class Tournament:
     def create_match(self, Player1, Player2, Player1Score, Player2Score):
         match = Match(Player1, Player2, Player1Score, Player2Score)
         return match
-
-    def init_matchs_matrix(self):
-        for player in self.joueurs:
-            self.matchs_matrix.append([player.id])

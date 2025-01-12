@@ -26,8 +26,8 @@ class ReportTournamentsList(ListView):
     '''vus pour la liste des tournois'''
 
     TITRE_VUE = "LISTE DES TOURNOIS\n------------------\n"
-    HEADER = ["Num", "Nom", "Lieu", "Date début", "date fin", "Description"]
-    LARGEURS_COLONNES = [4, 20, 20, 10, 10, 80]
+    HEADER = ["Num", "Nom", "Lieu", "Début", "Fin", "Rounds", "Actuel", "En cours", "Description"]
+    LARGEURS_COLONNES = [4, 20, 20, 10, 10, 6, 6, 4, 60]
 
     def __init__(self):
         pass
