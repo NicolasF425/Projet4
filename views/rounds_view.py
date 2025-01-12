@@ -13,22 +13,20 @@ class RoundsView:
         indentation = "         "
         espacement = "     "
         for infos_round in liste_infos_rounds:
-            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Terminé : " + infos_round[6])
+            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
+            i = 1
             for match in infos_round[2]:
-                print(indentation + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "
+                print(indentation + str(i) + " >" + espacement + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "
                       + str(match.scores_joueurs[1][0]) + espacement + "scores  : ", str(match.scores_joueurs[0][1])
                       + " - " + str(match.scores_joueurs[1][1]) + espacement + "Terminé : ", match.est_fini)
+                i += 1
             print('\n')
-        input("Appuyez sur Entrée...")
-
-
-class ScoreUpdateView:
-
-    def __init__(self, round):
-        self.round = round
 
     def update_score(self):
         print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
-        input("Numero du match : ")
-        input("Score joueur 1 : ")
-        input("Score joueur 2 : ")
+        numero_match = input("Numero du match : ")
+        score_premier_joueur = input("Score premier joueur : ")
+        score_second_joueur = input("Score second joueur : ")
+        liste_retour = [numero_match, score_premier_joueur, score_second_joueur]
+
+        return liste_retour
