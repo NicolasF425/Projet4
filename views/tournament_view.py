@@ -17,7 +17,7 @@ class TournamentMenuView(MenuView):
 
 class TournamentDisplayView(ListView, MenuView):
 
-    TITRE_VUE = "MODIFIER LE TOURNOI\n"
+    TITRE_VUE = "MODIFIER LE TOURNOI\n-------------------\n"
 
     def __init__(self, elements_menu):
         self.titre_vue = self.TITRE_VUE
@@ -34,13 +34,16 @@ class TournamentDisplayView(ListView, MenuView):
 
     def print_tournament_infos(self, tournament_infos):
         if type(tournament_infos) is list:
-            if len(tournament_infos) == 6:
+            if len(tournament_infos) == 9:
                 print("Numéro : ",  tournament_infos[0])
                 print("Nom : ", tournament_infos[1])
                 print("Lieu : ", tournament_infos[2])
                 print("Date de début : ", tournament_infos[3])
-                print("Date de fin", tournament_infos[4])
-                print("Description : ", tournament_infos[5])
+                print("Date de fin : ", tournament_infos[4])
+                print("Nombre de rounds : ", tournament_infos[5])
+                print("Round en cours : ", tournament_infos[6])
+                print("En cours : ", tournament_infos[7])
+                print("Description : ", tournament_infos[8])
         else:
             print("Données tournoi insuffisantes")
 
@@ -84,7 +87,7 @@ class ListTournamentsView(ListView):
 
     TITRE_VUE = "LISTE DES TOURNOIS\n------------------\n"
     HEADER = ["Num", "Nom", "Lieu", "Début", "Fin", "Rounds", "Actuel", "En cours", "Description"]
-    LARGEURS_COLONNES = [4, 20, 20, 10, 10, 6, 6, 4, 60]
+    LARGEURS_COLONNES = [4, 20, 20, 10, 10, 6, 6, 8, 60]
 
     def __init__(self):
         '''retour = 0 si pas sélection affichage simple'''

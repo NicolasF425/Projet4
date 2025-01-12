@@ -2,6 +2,7 @@ from models.tournament import Tournament
 from views.tournament_view import TournamentMenuView, NewTournamentView, ListTournamentsView, TournamentDisplayView
 from controllers.tournament_players_selection_controller import TournamentPlayersSelectionController
 from controllers.rounds_controller import RoundsController
+from controllers.tournament_rounds_upate_controller import TournamentRoundsUpdateController
 from utilities import tournaments_manager as tm
 from utilities import constantes
 from time import sleep
@@ -92,6 +93,11 @@ class TournamentController:
                     elif tournoi.en_cours == "Oui":
                         print("Le tournoi est déjà lancé !")
                         sleep(2)
+
+                # 3> Mise a jour des rounds et matchs
+                if choix_action == 3:
+                    controlleur = TournamentRoundsUpdateController()
+                    controlleur.print_view(tournoi)
 
         # Liste les tournois
         if choix == 3:
