@@ -44,8 +44,12 @@ class RoundsController:
         round.matchs = matchs
         self.tournoi.rounds.append(round)
 
+        print("Nouveau round")
+        print(round)
+        input("")
+
         # enregistre les modifications
-        self.update_tournament()
+        #self.update_tournament()
 
     def pair_players_round1(self, joueurs_round):
         '''Appairage pour le premier round'''
@@ -106,28 +110,33 @@ class RoundsController:
         for joueur in joueurs:
             liste_numeros_joueurs.append(joueur.numero_en_tournoi)
 
-        appairage_ok = False
         suivant = 1
-        while appairage_ok is not True:
+        paires = 0
+        while paires <= nb_paires:
             numero_joueur1 = liste_numeros_joueurs[0]
             joueur_suivant = liste_numeros_joueurs[suivant]
             # on verifie si le joueur a deja affronte le joueur suivant dans la liste
             suivant = 1
             for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1-1])):
-                # si c'est le cas :
+                # si on le trouve :
                 if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1-1][suivant]:
-                    suivant += 1
+                    break
                 else:
                     # si ce n'est pas le cas :
-                    numero_joueur2 = joueur_suivant
-                    match.set_players_numbers(numero_joueur1, numero_joueur2)
-                    del liste_numeros_joueurs[0]
-                    del liste_numeros_joueurs[suivant]
+                    suivant += 1
+
+            '''
+            numero_joueur2 = joueur_suivant
+            match.set_players_numbers(numero_joueur1, numero_joueur2)
+            del liste_numeros_joueurs[0]
+            del liste_numeros_joueurs[suivant]
+            paires += 1
+            '''
         liste_matchs.append(match)
 
         # si nombre de joueurs impair le joueur restant obtient 1 point
         if nb_joueurs_pair is not True:
-            joueurs[0].score += 1.0
+            joueurs[liste_numeros_joueurs[0]].score += 1.0
 
         return liste_matchs
 

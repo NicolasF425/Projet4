@@ -11,12 +11,13 @@ from os import path
 
 
 class TournamentController:
+    '''Controlleur pour la création d'un nouveau tournoi'''
 
     ELEMENTS_MENU = ["1/ Créer un nouveau tournoi\n", "2/ Mettre à jour un tournoi\n", "3/ Lister les tournois\n",
                      "4/ Retour\n"]
     RETOUR = 4
 
-    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ Lancer le tournoi\n",
+    ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ Créer un nouveau round\n",
                                  "3/ gérer les rounds\n", "4/ Retour\n"]
     RETOUR_MENU_MOD_TOURNOI = len(ELEMENTS_MENU)
 
@@ -81,12 +82,14 @@ class TournamentController:
                         print("Tournoi commencé, modification de la liste des joueurs impossible !")
                         sleep(2)
 
-                # 2> lancement du tournoi
+                # 2> création d'un nouveau round
                 if choix_action == 2:
-                    if tournoi.en_cours == "Non":
-                        reponse = input("Lancer le tournoi ? Cela bloquera la liste des joueurs et initialisera le "
-                                        "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
-                                        "ou appuyez sur Entrée pour annuler : ")
+                    # si creation du premier round, lancement du tournoi
+                    if tournoi.en_cours == "Non" and tournoi.round_actuel == 1:
+                        reponse = input("Initialiser le premier round ? Cela bloquera la liste des joueurs et "
+                                        "lancera le tournoi..."
+                                        + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                        + "ou appuyez sur Entrée pour annuler : ")
                         if reponse == "oui":
                             if len(tournoi.joueurs) > tournoi.nombre_de_rounds:
                                 tournoi.en_cours = "Oui"
@@ -95,14 +98,19 @@ class TournamentController:
                             else:
                                 print("Pas assez de joueurs !")
                                 sleep(2)
+                    # sinon creation d'un nouveau round
                     elif tournoi.en_cours == "Oui":
-                        print("Le tournoi est déjà lancé !")
-                        sleep(2)
+                        reponse = input("Initialiser le prochain round ? "
+                                        + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                        + "ou appuyez sur Entrée pour annuler : ")
+                        if reponse == "oui":
+                            controlleur = RoundsController(tournoi)
+                            controlleur.init_round(tournoi.round_actuel+1)
 
                 # 3> Mise a jour des rounds et matchs
                 if choix_action == 3:
                     controlleur = TournamentRoundsUpdateController()
-                    controlleur.print_view(tournoi)
+                    controlleur.manage_rounds(tournoi)
 
         # Liste les tournois
         if choix == 3:

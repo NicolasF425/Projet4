@@ -47,6 +47,13 @@ class TournamentPlayersSelectionController:
             # si le numero est vide on termine la selection
             if numero_choisi == "":
                 selection_ok = True
+            # si on veut tous les numeros
+            elif numero_choisi == "tous":
+                selection_joueurs.extend(tous_joueurs)
+                selection_joueurs_elements.extend(tous_joueurs_elements)
+                tous_joueurs = []
+                tous_joueurs_elements = []
+            # sinon on traite un numero
             else:
                 try:
                     numero_choisi = int(numero_choisi)
