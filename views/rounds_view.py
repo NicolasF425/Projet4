@@ -16,7 +16,7 @@ class RoundsView:
         indentation = "         "
         espacement = "     "
         for infos_round in liste_infos_rounds:
-            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
+            print(infos_round[1] + " > " + "Début : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
             i = 1
             for match in infos_round[2]:
                 print(indentation + str(i) + " >" + espacement + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "

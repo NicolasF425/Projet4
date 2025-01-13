@@ -92,7 +92,7 @@ def convert_dicts_to_objects(tournaments):
 
             round.joueurs = liste_joueurs
             round.date_heure_debut = tournament.rounds[i]["date_heure_debut"]
-            round.date_heure_fin = tournament.rounds[i]["date_heure_debut"]
+            round.date_heure_fin = tournament.rounds[i]["date_heure_fin"]
             round.est_fini = tournament.rounds[i]["est_fini"]
             liste_rounds.append(round)
         tournament.rounds = liste_rounds

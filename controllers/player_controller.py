@@ -7,6 +7,7 @@ from utilities import constantes
 
 
 class PlayerController:
+    '''Gestion du menu principal des joueurs'''
 
     FICHIER_JOUEURS = constantes.FICHIER_JOUEURS
     ELEMENTS_MENU = ["1/ Créer un nouveau joueur\n", "2/ lister les joueurs\n", "3/ Retour\n"]
@@ -115,6 +116,8 @@ class PlayerController:
         return False
 
     def sort_by_name(self, players):
-        '''Trie les joueurs par nom et par ordre alphabétique'''
+        '''Trie les joueurs par nom et par ordre alphabétique
+        parametre : une liste de Player
+        retour : une liste de Player classée'''
         sorted_players = sorted(players, key=lambda player: player.nom)
         return sorted_players

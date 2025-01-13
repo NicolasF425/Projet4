@@ -107,7 +107,7 @@ class TournamentController:
                             controlleur = RoundsController(tournoi)
                             controlleur.init_round(tournoi.round_actuel+1)
 
-                # 3> Mise a jour des rounds et matchs
+                # 3> Mise a jour des rounds et des resultats des matchs
                 if choix_action == 3:
                     controlleur = TournamentRoundsUpdateController()
                     controlleur.manage_rounds(tournoi)

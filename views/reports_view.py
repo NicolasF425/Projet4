@@ -56,7 +56,6 @@ class ReportTournamentPlayersView(ListView):
 
     def print_player_list(self, listes_infos_joueurs):
         clear_screen()
-        '''Vue pour la liste des joueurs'''
         print(self.TITRE_VUE)
         self.list_joueurs(listes_infos_joueurs)
 
@@ -69,7 +68,6 @@ class ReportTournamentPlayersView(ListView):
 
 
 class ReportTournamentRoundsMatchsView:
-
     TITRE_VUE = "LISTE DES ROUNDS ET MATCHS\n--------------------------\n"
 
     def __init__(self):
@@ -79,7 +77,7 @@ class ReportTournamentRoundsMatchsView:
         indentation = "         "
         espacement = "     "
         for infos_round in liste_infos_rounds:
-            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
+            print(infos_round[1] + " > " + "Début : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
             for match in infos_round[2]:
                 print(indentation + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "
                       + str(match.scores_joueurs[1][0]) + espacement + "scores  : ", str(match.scores_joueurs[0][1])
