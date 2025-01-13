@@ -90,8 +90,6 @@ class ListTournamentsView(ListView):
     LARGEURS_COLONNES = [4, 20, 20, 10, 10, 6, 6, 8, 60]
 
     def __init__(self):
-        '''retour = 0 si pas sélection affichage simple'''
-        '''retour = 1 si sélection dans la liste'''
         clear_screen()
         print(self.TITRE_VUE)
 

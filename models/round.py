@@ -1,6 +1,3 @@
-from models.match import Match
-
-
 class Round:
 
     def __init__(self):
@@ -35,18 +32,3 @@ class Round:
     def to_list(self):
         return [self.numero, self.nom, self.matchs, self.joueurs, self.date_heure_debut, self.date_heure_fin,
                 self.est_fini]
-
-    def check_all_matchs_finished(self):
-        matchs_finis = "Oui"
-        for match in self.matchs:
-            if match.is_finished == "Non":
-                matchs_finis = "Non"
-                break
-        return matchs_finis
-
-    def init_matches(self):
-        '''Creation des paires'''
-        number_of_players = len(self.joueurs)
-        for n in range(number_of_players, 2):
-            match = Match(self.joueurs[n], self.joueurs[n+1])
-            self.add_match(match)

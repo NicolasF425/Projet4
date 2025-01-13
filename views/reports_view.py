@@ -79,7 +79,7 @@ class ReportTournamentRoundsMatchsView:
         indentation = "         "
         espacement = "     "
         for infos_round in liste_infos_rounds:
-            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Terminé : " + infos_round[6])
+            print(infos_round[1] + " > " + "Débuté : " + infos_round[4] + " - " + "Fin : " + infos_round[5])
             for match in infos_round[2]:
                 print(indentation + "joueurs : ", str(match.scores_joueurs[0][0]) + " - "
                       + str(match.scores_joueurs[1][0]) + espacement + "scores  : ", str(match.scores_joueurs[0][1])

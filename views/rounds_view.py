@@ -6,10 +6,12 @@ class RoundsView:
     TITRE_VUE = "LISTE DES ROUNDS ET MATCHS\n--------------------------\n"
 
     def __init__(self):
+        pass
+
+    def print_rounds_matchs(self, liste_infos_rounds):
         clear_screen()
         print(self.TITRE_VUE)
 
-    def print_rounds_matchs(self, liste_infos_rounds):
         indentation = "         "
         espacement = "     "
         for infos_round in liste_infos_rounds:
@@ -23,7 +25,7 @@ class RoundsView:
             print('\n')
 
     def update_score(self):
-        print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
+        print("Mettre à jour un score (valeurs possible : 1.0 ou 0.5 ou 0.0)")
         numero_match = input("Numero du match : ")
         score_premier_joueur = input("Score premier joueur : ")
         score_second_joueur = input("Score second joueur : ")

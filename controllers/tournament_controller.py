@@ -1,5 +1,6 @@
 from models.tournament import Tournament
 from views.tournament_view import TournamentMenuView, NewTournamentView, ListTournamentsView, TournamentDisplayView
+from views.reports_view import ReportTournamentRoundsMatchsView, ReportTournamentPlayersView
 from controllers.tournament_players_selection_controller import TournamentPlayersSelectionController
 from controllers.rounds_controller import RoundsController
 from controllers.tournament_rounds_upate_controller import TournamentRoundsUpdateController
@@ -87,9 +88,13 @@ class TournamentController:
                                         "premier round..." + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
                                         "ou appuyez sur Entrée pour annuler : ")
                         if reponse == "oui":
-                            tournoi.en_cours = "Oui"
-                            controlleur = RoundsController(tournoi)
-                            controlleur.init_round(1)
+                            if len(tournoi.joueurs) > tournoi.nombre_de_rounds:
+                                tournoi.en_cours = "Oui"
+                                controlleur = RoundsController(tournoi)
+                                controlleur.init_round(1)
+                            else:
+                                print("Pas assez de joueurs !")
+                                sleep(2)
                     elif tournoi.en_cours == "Oui":
                         print("Le tournoi est déjà lancé !")
                         sleep(2)
@@ -108,7 +113,38 @@ class TournamentController:
                     listes_infos_tournois = []
                     for tournoi in tournois:
                         listes_infos_tournois.append(tournoi.to_list())
-                    view.list_tournaments(listes_infos_tournois)
+                    retour = view.list_tournaments(listes_infos_tournois, retour="R")
+
+                    # si on a choisi un tournoi
+                    if retour != "" and retour != constantes.ESCAPE:
+                        try:
+                            numero_tournoi = int(retour)
+                            # on enleve 1 car l'indice commence a 0 et les tournois a 1
+                            indice_tournoi = numero_tournoi-1
+
+                            # affichage des joueurs tries par ordre alphabetique
+                            joueurs_tournoi = self.sort_by_name(tournois[indice_tournoi].joueurs)
+                            listes_infos_joueurs = []
+                            for joueur in joueurs_tournoi:
+                                infos_joueur = joueur.to_list()
+                                listes_infos_joueurs.append(infos_joueur)
+                            players_view = ReportTournamentPlayersView()
+                            players_view.print_player_list(listes_infos_joueurs)
+
+                            # affichage des rounds et des matchs
+                            rounds_view = ReportTournamentRoundsMatchsView()
+                            liste_infos_rounds = []
+                            for round in tournois[indice_tournoi].rounds:
+                                infos_round = round.to_list()
+                                liste_infos_rounds.append(infos_round)
+                            rounds_view.print_rounds_matchs(liste_infos_rounds)
+
+                        except ValueError:
+                            print("Vous devez entrer un nombre !")
+                            sleep(2)
+                        except Exception as err:
+                            print(f"Erreur {err} !")
+                            sleep(5)
             else:
                 print("Fichier des tournois non trouvé")
                 sleep(2)
@@ -215,3 +251,8 @@ class TournamentController:
             return True
         sleep(2)
         return False
+
+    def sort_by_name(self, joueurs):
+        '''Trie les joueurs par nom et par ordre alphabétique'''
+        sorted_players = sorted(joueurs, key=lambda player: player.nom)
+        return sorted_players

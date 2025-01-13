@@ -68,6 +68,8 @@ class ReportController:
                             rounds_view = ReportTournamentRoundsMatchsView()
                             liste_infos_rounds = []
                             for round in tournois[indice_tournoi].rounds:
+                                print(round)
+                                input("")
                                 infos_round = round.to_list()
                                 liste_infos_rounds.append(infos_round)
                             rounds_view.print_rounds_matchs(liste_infos_rounds)

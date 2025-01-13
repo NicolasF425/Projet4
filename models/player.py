@@ -2,7 +2,7 @@ class Player:
     '''Classe de joueur pour les fichier json'''
 
     def __init__(self, nom="", prenom="", date_de_naissance="", identifiant_club="", numero_joueur=0,
-                 numero_en_tournoi=0, score=0):
+                 numero_en_tournoi=0, score=0.0):
         self.nom = nom
         self.prenom = prenom
         self.date_de_naissance = date_de_naissance

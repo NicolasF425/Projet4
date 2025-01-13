@@ -125,11 +125,9 @@ class RoundsController:
                     del liste_numeros_joueurs[suivant]
         liste_matchs.append(match)
 
-        '''
         # si nombre de joueurs impair le joueur restant obtient 1 point
         if nb_joueurs_pair is not True:
-            joueurs[0].score += 1
-        '''
+            joueurs[0].score += 1.0
 
         return liste_matchs
 

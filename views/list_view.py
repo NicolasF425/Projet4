@@ -13,7 +13,7 @@ class ListView:
         line = "|"
         i = 0
         for element in elements:
-            if type(element) is int:
+            if type(element) is int or type(element) is float:
                 element = str(element)
             delta_longueur = len(element)-largeurs_colonnes[i]
             if delta_longueur < 0:   # element plus court que largeur colonne

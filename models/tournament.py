@@ -63,9 +63,6 @@ class Tournament:
             liste_joueurs.append(datas_joueur)
         return liste_joueurs
 
-    def sort_players_by_score(self):
-        self.joueurs = self.joueurs.sort(key=lambda player: player.nom)
-
     def create_match(self, Player1, Player2, Player1Score, Player2Score):
         match = Match(Player1, Player2, Player1Score, Player2Score)
         return match
