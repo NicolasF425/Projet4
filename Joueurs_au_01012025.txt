@@ -1,3 +1,0 @@
-Nom Prenom Date de naissance Identifiant club
-nom1 prenom1 12/10/2015 AS12345
-nom2 prenom2 04/05/2014 ER45321
