@@ -1,0 +1,183 @@
+[
+    {
+        "nom": "Tournoi juniors",
+        "lieu": "Lyon 9",
+        "date_debut": "06/06/2025",
+        "date_fin": "08/06/2025",
+        "nombre_de_rounds": 4,
+        "round_actuel": 1,
+        "joueurs": [
+            {
+                "numero_joueur": 4,
+                "nom": "Langs",
+                "prenom": "K\u00e9vin",
+                "date_de_naissance": "14/06/1999",
+                "identifiant_club": "SD34587",
+                "numero_en_tournoi": 1,
+                "score": 1.0
+            },
+            {
+                "numero_joueur": 7,
+                "nom": "Georges",
+                "prenom": "Richard",
+                "date_de_naissance": "06/06/1985",
+                "identifiant_club": "AZ12345",
+                "numero_en_tournoi": 2,
+                "score": 0.0
+            },
+            {
+                "numero_joueur": 1,
+                "nom": "Urban",
+                "prenom": "Karl",
+                "date_de_naissance": "05/12/1985",
+                "identifiant_club": "AS43127",
+                "numero_en_tournoi": 3,
+                "score": 0.0
+            },
+            {
+                "numero_joueur": 6,
+                "nom": "Rogers",
+                "prenom": "Steve",
+                "date_de_naissance": "12/12/2000",
+                "identifiant_club": "SD23454",
+                "numero_en_tournoi": 4,
+                "score": 0.0
+            },
+            {
+                "numero_joueur": 2,
+                "nom": "Jones",
+                "prenom": "Paul",
+                "date_de_naissance": "12/06/2000",
+                "identifiant_club": "SD45987",
+                "numero_en_tournoi": 5,
+                "score": 0.0
+            },
+            {
+                "numero_joueur": 5,
+                "nom": "Juno",
+                "prenom": "Karen",
+                "date_de_naissance": "25/05/1998",
+                "identifiant_club": "AZ12346",
+                "numero_en_tournoi": 6,
+                "score": 0.0
+            }
+        ],
+        "tours": [
+            {
+                "numero": 1,
+                "nom": "Round 1",
+                "matchs": [
+                    {
+                        "joueur_1": 1,
+                        "score_joueur_1": "1.0",
+                        "joueur_2": 2,
+                        "score_joueur_2": "0.0",
+                        "est_fini": "Oui"
+                    },
+                    {
+                        "joueur_1": 3,
+                        "score_joueur_1": 0.0,
+                        "joueur_2": 4,
+                        "score_joueur_2": 0.0,
+                        "est_fini": "Non"
+                    },
+                    {
+                        "joueur_1": 5,
+                        "score_joueur_1": 0.0,
+                        "joueur_2": 6,
+                        "score_joueur_2": 0.0,
+                        "est_fini": "Non"
+                    }
+                ],
+                "joueurs": [
+                    {
+                        "numero_joueur": 4,
+                        "nom": "Langs",
+                        "prenom": "K\u00e9vin",
+                        "date_de_naissance": "14/06/1999",
+                        "identifiant_club": "SD34587",
+                        "numero_en_tournoi": 1,
+                        "score": 1.0
+                    },
+                    {
+                        "numero_joueur": 7,
+                        "nom": "Georges",
+                        "prenom": "Richard",
+                        "date_de_naissance": "06/06/1985",
+                        "identifiant_club": "AZ12345",
+                        "numero_en_tournoi": 2,
+                        "score": 0.0
+                    },
+                    {
+                        "numero_joueur": 1,
+                        "nom": "Urban",
+                        "prenom": "Karl",
+                        "date_de_naissance": "05/12/1985",
+                        "identifiant_club": "AS43127",
+                        "numero_en_tournoi": 3,
+                        "score": 0.0
+                    },
+                    {
+                        "numero_joueur": 6,
+                        "nom": "Rogers",
+                        "prenom": "Steve",
+                        "date_de_naissance": "12/12/2000",
+                        "identifiant_club": "SD23454",
+                        "numero_en_tournoi": 4,
+                        "score": 0.0
+                    },
+                    {
+                        "numero_joueur": 2,
+                        "nom": "Jones",
+                        "prenom": "Paul",
+                        "date_de_naissance": "12/06/2000",
+                        "identifiant_club": "SD45987",
+                        "numero_en_tournoi": 5,
+                        "score": 0.0
+                    },
+                    {
+                        "numero_joueur": 5,
+                        "nom": "Juno",
+                        "prenom": "Karen",
+                        "date_de_naissance": "25/05/1998",
+                        "identifiant_club": "AZ12346",
+                        "numero_en_tournoi": 6,
+                        "score": 0.0
+                    }
+                ],
+                "date_heure_debut": "14/01/2025, 16:57",
+                "date_heure_fin": "",
+                "est_fini": "Non"
+            }
+        ],
+        "description": "enfants de 8 \u00e0 12 ans",
+        "matrice_des_matchs": [
+            [
+                1,
+                2
+            ],
+            [
+                2,
+                1
+            ],
+            [
+                3,
+                4
+            ],
+            [
+                4,
+                3
+            ],
+            [
+                5,
+                6
+            ],
+            [
+                6,
+                5
+            ]
+        ],
+        "en_cours": "Oui",
+        "numero_tournoi": 1
+    }
+]
