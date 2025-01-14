@@ -109,22 +109,31 @@ class RoundsController:
 
         paires = 0
         while paires < nb_paires:
-            numero_joueur1 = liste_numeros_joueurs[0]
-            joueur_suivant = liste_numeros_joueurs[1]
-            # on verifie si le joueur a deja affronte le joueur suivant dans la liste
-            for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1-1])):
-                # si on le trouve :
-                if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1-1][i]:
-                    break
+            suivant_ok = False
+            suivant = 1
+            while suivant_ok is False:
+                numero_joueur1 = liste_numeros_joueurs[0]
+                joueur_suivant = liste_numeros_joueurs[suivant]
 
-            numero_joueur2 = joueur_suivant
-            match = Match()
-            match.set_players_numbers(numero_joueur1, numero_joueur2)
-            del liste_numeros_joueurs[0]
-            del liste_numeros_joueurs[i-1]
-            paires += 1
+                # on verifie si le joueur a deja affronte le joueur suivant dans la liste
+                suivant_ok = True
+                for i in range(1, len(self.tournoi.matchs_matrix[numero_joueur1-1])):
+                    # si on le trouve on va tester le joueur suivant:
+                    if joueur_suivant == self.tournoi.matchs_matrix[numero_joueur1-1][i]:
+                        suivant_ok = False
+                        suivant += 1
+                        break
 
-            liste_matchs.append(match)
+            # s'il n'a pas affronté le joueur suivant dans la liste des joueurs du round
+            if suivant_ok is True:
+                numero_joueur2 = joueur_suivant
+                match = Match()
+                match.set_players_numbers(numero_joueur1, numero_joueur2)
+                del liste_numeros_joueurs[0]
+                del liste_numeros_joueurs[suivant-1]
+                paires += 1
+
+                liste_matchs.append(match)
 
         # si nombre de joueurs impair le joueur restant obtient 1 point
         if nb_joueurs_pair is not True:
