@@ -18,7 +18,7 @@ class TournamentController:
     RETOUR = 4
 
     ELEMENTS_MENU_MOD_TOURNOI = ["1/ Modifier la liste des joueurs\n", "2/ Créer un nouveau round\n",
-                                 "3/ gérer les rounds\n", "4/ Retour\n"]
+                                 "3/ Mettre à jour les scores\n", "4/ Retour\n"]
     RETOUR_MENU_MOD_TOURNOI = len(ELEMENTS_MENU)
 
     def __init__(self):
