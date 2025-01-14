@@ -1,6 +1,3 @@
-from models.match import Match
-
-
 class Tournament:
 
     def __init__(self, nom="", lieu="", date_debut="", date_fin="", nombre_de_rounds=4, round_actuel=1, joueurs=[],
@@ -62,7 +59,3 @@ class Tournament:
             datas_joueur = joueur.to_list()
             liste_joueurs.append(datas_joueur)
         return liste_joueurs
-
-    def create_match(self, Player1, Player2, Player1Score, Player2Score):
-        match = Match(Player1, Player2, Player1Score, Player2Score)
-        return match

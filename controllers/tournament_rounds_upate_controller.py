@@ -7,6 +7,7 @@ from time import sleep
 
 
 class TournamentRoundsUpdateController:
+    '''Classe pour gérer l'état des scores et des rounds'''
 
     def __init__(self):
         pass
@@ -51,6 +52,8 @@ class TournamentRoundsUpdateController:
                     maintenant = datetime.now()
                     date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
                     tournoi.rounds[round_actuel].set_date_heure_fin(date_heure)
+                    if self.check_all_rounds_finished(tournoi):
+                        tournoi.en_cours = "Non"
 
                 # sauvegarde du tournoi créé
                 tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
@@ -62,6 +65,7 @@ class TournamentRoundsUpdateController:
             sleep(2)
 
     def check_all_matchs_finished(self, round):
+        '''Vérfie si tous les matchs du round en paramètre sont finis'''
         matchs_finis = "Oui"
         for match in round.matchs:
             if match.est_fini == "Non":
@@ -70,6 +74,7 @@ class TournamentRoundsUpdateController:
         return matchs_finis
 
     def check_all_rounds_finished(self, tournoi):
+        '''Vérifie si tous les rounds du tournoi en paramètre sont finis'''
         tous_rounds_finis = True
         for round in tournoi.rounds:
             if round.est_fini == "Non":

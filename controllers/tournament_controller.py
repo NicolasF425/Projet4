@@ -84,6 +84,10 @@ class TournamentController:
 
                 # 2> création d'un nouveau round
                 if choix_action == 2:
+                    print(tournoi.en_cours)
+                    print(tournoi.round_actuel < tournoi.nombre_de_rounds)
+                    print(tournoi.rounds[tournoi.round_actuel-1].est_fini)
+                    input("")
                     # si creation du premier round, lancement du tournoi
                     if tournoi.en_cours == "Non" and tournoi.round_actuel == 1:
                         reponse = input("Initialiser le premier round ? Cela bloquera la liste des joueurs et "
@@ -98,8 +102,10 @@ class TournamentController:
                             else:
                                 print("Pas assez de joueurs !")
                                 sleep(2)
+
                     # sinon creation d'un nouveau round
-                    elif tournoi.en_cours == "Oui":
+                    elif tournoi.en_cours == "Oui" and tournoi.round_actuel < tournoi.nombre_de_rounds and \
+                                             tournoi.rounds[tournoi.round_actuel-1].est_fini == "Oui":
                         reponse = input("Initialiser le prochain round ? "
                                         + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
                                         + "ou appuyez sur Entrée pour annuler : ")

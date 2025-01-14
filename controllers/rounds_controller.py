@@ -44,6 +44,8 @@ class RoundsController:
         round.set_date_heure_debut(date_heure)
         round.matchs = matchs
         self.tournoi.rounds.append(round)
+        self.tournoi.round_actuel = numero_round
+        self.tournoi.en_cours = "Oui"
 
         # enregistre les modifications
         self.update_tournament()
