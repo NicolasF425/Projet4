@@ -37,8 +37,10 @@ class TournamentRoundsUpdateController:
                 if tournoi.rounds[round_actuel].matchs[indice_match] != "Non":
                     numero_premier_joueur = tournoi.rounds[round_actuel].matchs[indice_match].scores_joueurs[0][0]
                     numero_second_joueur = tournoi.rounds[round_actuel].matchs[indice_match].scores_joueurs[1][0]
+
                     # onm met a jour les scores du match
                     scores_joueurs = ([numero_premier_joueur, retour[1]], [numero_second_joueur, retour[2]])
+
                     # on met a jour le nombrs de points des joueurs
                     tournoi.rounds[round_actuel].joueurs[numero_premier_joueur-1].score += float(retour[1])
                     tournoi.rounds[round_actuel].joueurs[numero_second_joueur-1].score += float(retour[2])
@@ -56,8 +58,12 @@ class TournamentRoundsUpdateController:
                         maintenant = datetime.now()
                         date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
                         tournoi.rounds[round_actuel].set_date_heure_fin(date_heure)
-                        #if self.check_all_rounds_finished(tournoi) is True:
-                        #    tournoi.en_cours = "Non"
+                        # on vérifie si tous le match est fini
+                        if round_actuel == tournoi.nombre_de_rounds:
+                            if tournoi.rounds[round_actuel].est_fini:
+                                tournoi.en_cours = "Non"
+                                print("FIN DU MATCH")
+                                sleep(3)
 
                     # sauvegarde du tournoi
                     tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
@@ -74,10 +80,10 @@ class TournamentRoundsUpdateController:
             print("Pas de round actif !")
             sleep(2)
 
-
     def check_scores(self, retour, tournoi):
         try:
-            numero_match = int(retour[0])
+            # test si on a bien entré un nombre
+            int(retour[0])
         except ValueError:
             print("Vous devez entrer un numéro de match :")
             sleep(2)
@@ -86,7 +92,8 @@ class TournamentRoundsUpdateController:
             print("Numéro de match incorrect !")
             sleep(2)
             return "Non"
-        if (retour[1] != "1" and retour[1] != "0.5" and retour[1] != "0" and retour[2] != "1" and retour[2] != "0.5" and retour[2] != "0"):
+        if (retour[1] != "1" and retour[1] != "0.5" and retour[1] != "0" and retour[2] != "1" and retour[2] != "0.5"
+                and retour[2] != "0"):
             print("Valeurs de scores incorrectes")
             sleep(2)
             return "Non"
@@ -104,15 +111,3 @@ class TournamentRoundsUpdateController:
                 matchs_finis = "Non"
                 break
         return matchs_finis
-
-    def check_all_rounds_finished(self, tournoi):
-        '''Vérifie si tous les rounds du tournoi en paramètre sont finis'''
-        nombre_de_rounds = len(tournoi.rounds)
-        i = 0
-        for round in tournoi.rounds:
-            if round.est_fini == "Oui":
-                i =+ 1
-        if i == nombre_de_rounds:
-            return True
-        else:
-            return False

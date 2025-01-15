@@ -24,7 +24,7 @@ class PlayerController:
         # Nouveau joueur
         if choix == 1:
             ok = False
-            while ok is False or ok != constantes.ESCAPE:
+            while ok is False and ok != constantes.ESCAPE:
                 view = AddPlayerView()
                 player_datas = view.add_new_player()
                 ok = self.check_player_datas(player_datas)
