@@ -28,6 +28,9 @@ class TournamentRoundsUpdateController:
         # on propose l'affectation des scores
         if tournoi.rounds[round_actuel].est_fini == "Non":
             retour = rounds_view.update_score()
+            # controle des entrees
+            if self.check_scores(retour, tournoi) == "Non":
+                return "Non"
             if retour != constantes.ESCAPE:
                 indice_match = int(retour[0])-1
                 match = Match()
@@ -45,24 +48,53 @@ class TournamentRoundsUpdateController:
                     match.est_fini = "Oui"
                     tournoi.rounds[round_actuel].matchs[indice_match] = match
 
-                # on verifie si tous les matchs sont finis
-                # on met a jour le round si c'est le cas
-                if self.check_all_matchs_finished(tournoi.rounds[round_actuel]) == "Oui":
-                    tournoi.rounds[round_actuel].est_fini = "Oui"
-                    maintenant = datetime.now()
-                    date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
-                    tournoi.rounds[round_actuel].set_date_heure_fin(date_heure)
-                    if self.check_all_rounds_finished(tournoi):
-                        tournoi.en_cours = "Non"
+                    # on verifie si tous les matchs sont finis
+                    # on met a jour le round si c'est le cas
+                    tous_matchs_finis = self.check_all_matchs_finished(tournoi.rounds[round_actuel])
+                    if tous_matchs_finis == "Oui":
+                        tournoi.rounds[round_actuel].est_fini = "Oui"
+                        maintenant = datetime.now()
+                        date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
+                        tournoi.rounds[round_actuel].set_date_heure_fin(date_heure)
+                        #if self.check_all_rounds_finished(tournoi) is True:
+                        #    tournoi.en_cours = "Non"
 
-                # sauvegarde du tournoi créé
-                tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
-                tournois[tournoi.numero_tournoi-1] = tournoi
-                tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
+                    # sauvegarde du tournoi
+                    tournois = tm.load_tournaments(constantes.FICHIER_TOURNOIS)
+                    tournois[tournoi.numero_tournoi-1] = tournoi
+                    tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
+
+                    return tous_matchs_finis
+                else:
+                    print("Ce match est fini !")
+                    sleep(2)
+                    return ("Non")
         # si le round actuel est fini
         else:
             print("Pas de round actif !")
             sleep(2)
+
+
+    def check_scores(self, retour, tournoi):
+        try:
+            numero_match = int(retour[0])
+        except ValueError:
+            print("Vous devez entrer un numéro de match :")
+            sleep(2)
+            return "Non"
+        if int(retour[0]) > len(tournoi.rounds[tournoi.round_actuel-1].matchs):
+            print("Numéro de match incorrect !")
+            sleep(2)
+            return "Non"
+        if (retour[1] != "1" and retour[1] != "0.5" and retour[1] != "0" and retour[2] != "1" and retour[2] != "0.5" and retour[2] != "0"):
+            print("Valeurs de scores incorrectes")
+            sleep(2)
+            return "Non"
+        total_scores = float(retour[1]) + float(retour[2])
+        if total_scores < 1 or total_scores > 1:
+            print("Valeurs de scores incorrectes")
+            sleep(2)
+            return "Non"
 
     def check_all_matchs_finished(self, round):
         '''Vérfie si tous les matchs du round en paramètre sont finis'''
@@ -75,9 +107,12 @@ class TournamentRoundsUpdateController:
 
     def check_all_rounds_finished(self, tournoi):
         '''Vérifie si tous les rounds du tournoi en paramètre sont finis'''
-        tous_rounds_finis = True
+        nombre_de_rounds = len(tournoi.rounds)
+        i = 0
         for round in tournoi.rounds:
-            if round.est_fini == "Non":
-                tous_rounds_finis = False
-                return tous_rounds_finis
-        return tous_rounds_finis
+            if round.est_fini == "Oui":
+                i =+ 1
+        if i == nombre_de_rounds:
+            return True
+        else:
+            return False

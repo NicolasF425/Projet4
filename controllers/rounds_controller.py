@@ -49,6 +49,8 @@ class RoundsController:
 
         # enregistre les modifications
         self.update_tournament()
+        print("Round créé !")
+        sleep(2)
 
     def pair_players_round1(self, joueurs_round):
         '''Appairage pour le premier round'''

@@ -1,6 +1,6 @@
 class Tournament:
 
-    def __init__(self, nom="", lieu="", date_debut="", date_fin="", nombre_de_rounds=4, round_actuel=1, joueurs=[],
+    def __init__(self, nom="", lieu="", date_debut="", date_fin="", nombre_de_rounds=4, round_actuel=0, joueurs=[],
                  tours=[], description="", matrice_des_matchs=[], en_cours="Non", numero_tournoi=0):
         self.nom = nom
         self.lieu = lieu

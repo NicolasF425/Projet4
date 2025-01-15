@@ -26,7 +26,7 @@ class RoundsView:
             print('\n')
 
     def update_score(self):
-        print("Mettre à jour un score (valeurs possible : 1.0 ou 0.5 ou 0.0)")
+        print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
         numero_match = input("Numero du match : ")
         if numero_match == constantes.ESCAPE:
             return constantes.ESCAPE

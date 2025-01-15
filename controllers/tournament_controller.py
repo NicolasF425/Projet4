@@ -85,7 +85,7 @@ class TournamentController:
                 # 2> création d'un nouveau round
                 if choix_action == 2:
                     # si creation du premier round, lancement du tournoi
-                    if tournoi.en_cours == "Non" and tournoi.round_actuel == 1:
+                    if tournoi.en_cours == "Non" and tournoi.round_actuel == 0:
                         reponse = input("Initialiser le premier round ? Cela bloquera la liste des joueurs et "
                                         "lancera le tournoi..."
                                         + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
@@ -109,10 +109,16 @@ class TournamentController:
                             controlleur = RoundsController(tournoi)
                             controlleur.init_round(tournoi.round_actuel+1)
 
-                # 3> Mise a jour des rounds et des resultats des matchs
+                # 3> Mise a jour des resultats des matchs et des rounds
                 if choix_action == 3:
-                    controlleur = TournamentRoundsUpdateController()
-                    controlleur.manage_rounds(tournoi)
+                    if tournoi.en_cours == "Oui":
+                        reponse = "Non"
+                        while reponse == "Non":
+                            controlleur = TournamentRoundsUpdateController()
+                            reponse = controlleur.manage_rounds(tournoi)
+                    else:
+                        print("Pas de scores à mettre à jour !")
+                        sleep(2)
 
         # Liste les tournois
         if choix == 3:
