@@ -58,8 +58,9 @@ class TournamentRoundsUpdateController:
                         maintenant = datetime.now()
                         date_heure = maintenant.strftime("%d/%m/%Y, %H:%M")
                         tournoi.rounds[round_actuel].set_date_heure_fin(date_heure)
-                        # on vérifie si tous le match est fini
-                        if round_actuel == tournoi.nombre_de_rounds:
+
+                        # on vérifie si tous les rounds sont finis
+                        if (round_actuel+1) == tournoi.nombre_de_rounds:
                             if tournoi.rounds[round_actuel].est_fini:
                                 tournoi.en_cours = "Non"
                                 print("FIN DU MATCH")

@@ -48,7 +48,7 @@ class ReportTournamentPlayersView(ListView):
     TITRE_VUE = "LISTE DES JOUEURS DU TOURNOI PAR ORDRE ALPHABETIQUE\n" \
         "---------------------------------------------------\n"
 
-    HEADER = ["Numero", "Nom", "Prenom", "Date naissance", "Club", "Num. particpant", "Points"]
+    HEADER = ["Numero", "Nom", "Prenom", "Date naissance", "Club", "N°. participant", "Points"]
     LARGEURS_COLONNES = [15, 20, 20, 14, 7, 15, 6]
 
     def __init__(self):

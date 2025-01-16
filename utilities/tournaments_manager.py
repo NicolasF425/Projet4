@@ -1,24 +1,25 @@
-# gere la sauvegarde d'une liste de tournois
-# et la lecture du fichier des tournois
-
 import json
 from models.tournament import Tournament
 from models.player import Player
 from models.match import Match
 from models.round import Round
+from time import sleep
 
 
 def save_tournaments(tournaments, filename):
+    '''gere la sauvegarde d'une liste de tournois'''
     try:
         with open(filename, "w") as file:
             liste_dicts = [tournament.to_dict() for tournament in tournaments]
             json.dump(liste_dicts, file, indent=4)
             print(f"Sauvegarde effectuee dans {filename}")
+            sleep(2)
     except Exception as e:
         print(f"Erreur de sauvegarde : {e}")
 
 
 def load_tournaments(filename):
+    '''Gere la lecture du fichier des tournois'''
     try:
         # on charge les tournois a partir du fichier
         with open(filename, "r") as file:

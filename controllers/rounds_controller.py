@@ -49,8 +49,6 @@ class RoundsController:
 
         # enregistre les modifications
         self.update_tournament()
-        print("Round créé !")
-        sleep(2)
 
     def pair_players_round1(self, joueurs_round):
         '''Appairage pour le premier round'''
@@ -133,6 +131,9 @@ class RoundsController:
                 numero_joueur2 = joueur_suivant
                 match = Match()
                 match.set_players_numbers(numero_joueur1, numero_joueur2)
+                # on met a jour la matrice des affrontements
+                self.tournoi.matchs_matrix[numero_joueur1-1].append(numero_joueur2)
+                self.tournoi.matchs_matrix[numero_joueur2-1].append(numero_joueur1)
                 del liste_numeros_joueurs[0]
                 del liste_numeros_joueurs[suivant-1]
                 paires += 1
