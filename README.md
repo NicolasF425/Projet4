@@ -42,6 +42,9 @@ Le programme fonctionne en ligne de commande ; dans le répertoire du projet éx
 
 _python main.py_
 
+Le fichier constantes.py contient également un paramètre pour la séquence d'échappement utilisable dans certains écrans, en particulier lors de l'entrée des informations des joueurs, des tournois ou des scores.
+
+
 
 
 
