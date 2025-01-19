@@ -10,13 +10,15 @@ Le programme est fonctionnel mais pas achevé.
 
 La gestion d'un nombre de joueurs impair est encore incomplète (scoring incorrect)
 
-Le programme ne nécessite pas de package particulier ou d'environnement virtuel
+Certains contrôles sur les champs ne sont pas implémentés.
 
 ### **Prérequis :** 
 
 + Un environnement de développement (VSCode, Pycharm...)
 + Python 3.X
 + avoir installé pip (gestionnaire de packages pour python) s'il n'est pas présent
+
++ Le programme ne nécessite pas de package particulier ou d'environnement virtuel
 
 ### Exécution des commandes
 
