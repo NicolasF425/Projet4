@@ -70,5 +70,23 @@
         "identifiant_club": "AS34567",
         "numero_en_tournoi": 0,
         "score": 0.0
+    },
+    {
+        "numero_joueur": 9,
+        "nom": "Harisson",
+        "prenom": "Greg",
+        "date_de_naissance": "12/06/1998",
+        "identifiant_club": "FG45632",
+        "numero_en_tournoi": 0,
+        "score": 0.0
+    },
+    {
+        "numero_joueur": 10,
+        "nom": "Jacques",
+        "prenom": "Christian",
+        "date_de_naissance": "06/04/1998",
+        "identifiant_club": "AS12345",
+        "numero_en_tournoi": 0,
+        "score": 0.0
     }
 ]

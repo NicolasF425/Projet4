@@ -28,6 +28,8 @@ class TournamentRoundsUpdateController:
         # on propose l'affectation des scores
         if tournoi.rounds[round_actuel].est_fini == "Non":
             retour = rounds_view.update_score()
+            if retour == constantes.ESCAPE:
+                return constantes.ESCAPE
             # controle des entrees
             if self.check_scores(retour, tournoi) == "Non":
                 return "Non"
@@ -63,7 +65,7 @@ class TournamentRoundsUpdateController:
                         if (round_actuel+1) == tournoi.nombre_de_rounds:
                             if tournoi.rounds[round_actuel].est_fini:
                                 tournoi.en_cours = "Non"
-                                print("FIN DU MATCH")
+                                print("\nFIN DU MATCH !!!\nMerci de consulter le rapport de ce match !")
                                 sleep(3)
 
                     # sauvegarde du tournoi

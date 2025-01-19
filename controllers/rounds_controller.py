@@ -4,7 +4,6 @@ from models.match import Match
 from models.round import Round
 from utilities import tournaments_manager as tm
 from utilities import constantes
-from time import sleep
 
 
 class RoundsController:
@@ -142,7 +141,10 @@ class RoundsController:
 
         # si nombre de joueurs impair le joueur restant obtient 1 point
         if nb_joueurs_pair is not True:
-            joueurs_round[liste_numeros_joueurs[0]].score += 1.0
+            numero_dernier_joueur = joueurs_round[0].numero_en_tournoi
+            self.tournoi.joueurs[numero_dernier_joueur-1].score += 1
+            # on considere qu'il a battu un hypothetique joueur 0
+            self.tournoi.matchs_matrix[numero_dernier_joueur-1].append(0)
 
         return liste_matchs
 
@@ -167,4 +169,3 @@ class RoundsController:
             numero = self.tournoi.numero_tournoi-1
             tournois[numero] = self.tournoi
             tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
-            sleep(3)

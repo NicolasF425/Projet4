@@ -203,7 +203,6 @@ class TournamentController:
             tournoi.set_numero_tournoi(len(tournois)+1)
         tournois.append(tournoi)
         tm.save_tournaments(tournois, constantes.FICHIER_TOURNOIS)
-        sleep(2)
 
     def check_nom(self, nom):
         '''Vérifie si le champ nom est rempli'''
