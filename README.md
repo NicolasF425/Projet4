@@ -18,7 +18,7 @@ Le programme ne nécessite pas de package particulier ou d'environnement virtuel
 + Python 3.X
 + avoir installé pip (gestionnaire de packages pour python) s'il n'est pas présent
 
-### exécution des commandes
+### Exécution des commandes
 
 Sous Windows : avec la ligne de commandes (cmd)
 
