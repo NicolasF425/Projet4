@@ -18,7 +18,7 @@ Certains contrôles sur les champs ne sont pas implémentés.
 + Python 3.X
 + avoir installé pip (gestionnaire de packages pour python) s'il n'est pas présent
 
-+ Le programme ne nécessite pas de package particulier ou d'environnement virtuel
+Le programme ne nécessite pas de package particulier ou d'environnement virtuel
 
 ### Exécution des commandes
 
