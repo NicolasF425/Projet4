@@ -61,26 +61,86 @@ class NewTournamentView:
 
     def param_tournament(self):
         print("CREATION D'UN NOUVEAU TOURNOI\n-----------------------------\n")
+
         nom = input("Nom :")
-        if nom == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nom(nom) is not True and nom != constantes.ESCAPE:
+            nom = input("Nom :")
+            if nom == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         lieu = input("Lieu :")
-        if lieu == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_lieu(lieu) is not True and lieu != constantes.ESCAPE:
+            lieu = input("Lieu :")
+            if lieu == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         date_debut = input("Date de début :")
-        if date_debut == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_date_debut(date_debut) is not True and date_debut != constantes.ESCAPE:
+            date_debut = input("Date de début :")
+            if date_debut == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         date_fin = input("Date de fin :")
-        if date_fin == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_date_fin(date_fin) is not True and date_fin != constantes.ESCAPE:
+            if date_fin == constantes.ESCAPE:
+                return constantes.ESCAPE
+            date_fin = input("Date de fin :")
+
         nombre_de_rounds = input("Nombre de rounds :")
-        if nombre_de_rounds == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nombre_rounds(nombre_de_rounds) > 0 and date_fin != constantes.ESCAPE:
+            nombre_de_rounds = input("Nombre de rounds :")
+            if nombre_de_rounds == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         description = input("Description :")
         if description == constantes.ESCAPE:
             return constantes.ESCAPE
+
         datas_tournament = [nom, lieu, date_debut, date_fin, nombre_de_rounds, description]
         return datas_tournament
+
+    def check_nom(self, nom):
+        '''Vérifie si le champ nom est rempli'''
+        if nom == "":
+            print("Le nom ne peut etre vide !")
+            return False
+        return True
+
+    def check_lieu(self, lieu):
+        '''Vérifie si le champ lieu est rempli'''
+        if lieu == "":
+            print("Le lieu ne peut etre vide !")
+            return False
+        return True
+
+    def check_date_debut(self, date_debut):
+        longueur = len(date_debut)
+        if longueur < 10 or longueur > 10:
+            print("Date de début mal formatée !")
+            return False
+        return True
+
+    def check_date_fin(self, date_fin):
+        longueur = len(date_fin)
+        if longueur < 10 or longueur > 10:
+            print("Date de fin mal formatée !")
+            return False
+        return True
+
+    def check_nombre_rounds(self, nombre):
+        '''Vérifie l'entrée du champ nombre de round
+        renvoit 0 si le champ est vide,
+        -1 si ce n'est pas un nombre qui a ete entré,
+        sinon le nombre de rounds est renvoyé'''
+        if nombre == "":
+            return 0
+        # test si un nombre est bien entré
+        try:
+            test_nombre = int(nombre)
+        except ValueError:
+            print("Veuillez entrer un nombre !")
+            return -1
+        return test_nombre
 
 
 class ListTournamentsView(ListView):

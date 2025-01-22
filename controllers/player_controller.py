@@ -23,13 +23,15 @@ class PlayerController:
 
         # Nouveau joueur
         if choix == 1:
-            ok = False
-            while ok is False and ok != constantes.ESCAPE:
+
+            while True:
                 view = AddPlayerView()
                 player_datas = view.add_new_player()
-                ok = self.check_player_datas(player_datas)
-            if ok is True:
-                self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
+                if player_datas == constantes.ESCAPE:
+                    break
+                if player_datas != constantes.ESCAPE:
+                    self.create_player(player_datas[0], player_datas[1], player_datas[2], player_datas[3])
+                    break
 
         # Liste des joueurs par ordre alphabetique
         if choix == 2:
@@ -70,50 +72,6 @@ class PlayerController:
             sleep(2)
         except Exception as e:
             print(f"Erreur de fichier : {e}")
-
-    def check_nom(self, nom):
-        if nom == "":
-            print("Le nom ne peut etre vide !")
-            return False
-        return True
-
-    def check_prenom(self, prenom):
-        if prenom == "":
-            print("le prenom ne peut etre vide !")
-            return False
-        return True
-
-    def check_date_de_naissance(self, date_de_naissance):
-        longueur = len(date_de_naissance)
-        if longueur < 10 or longueur > 10:
-            print("date de naissance mal formatée !")
-            return False
-        return True
-
-    def check_identifiant_club(self, identifiant_club):
-        longueur = len(identifiant_club)
-        if longueur < 7 or longueur > 7:
-            print("Identifiant du club mal formaté !")
-            return False
-        return True
-
-    # controle si les informations entrees sont celles attendues
-    def check_player_datas(self, player_datas):
-        if player_datas == constantes.ESCAPE:
-            return constantes.ESCAPE
-        nom = player_datas[0]
-        prenom = player_datas[1]
-        date_de_naissance = player_datas[2]
-        identifiant_club = player_datas[3]
-        print("")
-        nom_ok = self.check_nom(nom)
-        prenom_ok = self.check_prenom(prenom)
-        date_de_naissance_ok = self.check_date_de_naissance(date_de_naissance)
-        identifiant_club_ok = self.check_identifiant_club(identifiant_club)
-        if (nom_ok and prenom_ok and date_de_naissance_ok and identifiant_club_ok):
-            return True
-        sleep(2)
-        return False
 
     def sort_by_name(self, players):
         '''Trie les joueurs par nom et par ordre alphabétique

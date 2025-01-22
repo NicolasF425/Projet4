@@ -31,20 +31,59 @@ class AddPlayerView:
 
     def add_new_player(self):
         print("Creation du nouveau joueur")
+
         self.nom = input("Nom : ")
-        if self.nom == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nom(self.nom) is not True and self.nom != constantes.ESCAPE:
+            self.nom = input("Nom : ")
+            if self.nom == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         self.prenom = input("Prenom : ")
-        if self.prenom == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nom(self.prenom) is not True and self.prenom != constantes.ESCAPE:
+            self.prenom = input("Prenom : ")
+            if self.prenom == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
-        if self.date_de_naissance == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nom(self.date_de_naissance) is not True and self.date_de_naissance != constantes.ESCAPE:
+            self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
+            if self.date_de_naissance == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         self.identifiant_club = input("identifiant du club :")
-        if self.identifiant_club == constantes.ESCAPE:
-            return constantes.ESCAPE
+        while self.check_nom(self.identifiant_club) is not True and self.identifiant_club != constantes.ESCAPE:
+            self.identifiant_club = input("identifiant du club :")
+            if self.identifiant_club == constantes.ESCAPE:
+                return constantes.ESCAPE
+
         self.datas_player = [self.nom, self.prenom, self.date_de_naissance, self.identifiant_club]
         return self.datas_player
+
+    def check_nom(self, nom):
+        if nom == "":
+            print("Le nom ne peut etre vide !")
+            return False
+        return True
+
+    def check_prenom(self, prenom):
+        if prenom == "":
+            print("le prenom ne peut etre vide !")
+            return False
+        return True
+
+    def check_date_de_naissance(self, date_de_naissance):
+        longueur = len(date_de_naissance)
+        if longueur < 10 or longueur > 10:
+            print("date de naissance mal formatée !")
+            return False
+        return True
+
+    def check_identifiant_club(self, identifiant_club):
+        longueur = len(identifiant_club)
+        if longueur < 7 or longueur > 7:
+            print("Identifiant du club mal formaté !")
+            return False
+        return True
 
 
 class ListPlayersView(ListView):
