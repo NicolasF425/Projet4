@@ -42,9 +42,6 @@ class ReportTournamentsList(ListView):
         retour = input("\nSélectionnez un tournoi ou appuyez sur Entrée pour quitter ")
         return retour
 
-    def print_info(info):
-        print(info)
-
 
 class ReportTournamentPlayersView(ListView):
 
@@ -69,7 +66,7 @@ class ReportTournamentPlayersView(ListView):
             self.print_line(infos_joueurs, self.LARGEURS_COLONNES)
         print("\n")
 
-    def print_info(info):
+    def print_info(self, info):
         print(info)
 
 

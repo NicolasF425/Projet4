@@ -72,7 +72,7 @@ class ReportController:
                                 liste_infos_rounds.append(infos_round)
                             rounds_view.print_rounds_matchs(liste_infos_rounds)
                         except ValueError:
-                            players_view.print_info("Vous devez entrer un nombre !")
+                            view.print_info("Vous devez entrer un nombre !")
                             sleep(2)
                         except Exception as err:
                             view.print_info(f"Erreur {err} !")

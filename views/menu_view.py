@@ -39,5 +39,5 @@ class MenuView:
             sleep(2)
             return False
 
-    def print_info(info):
+    def print_info(self, info):
         print(info)
