@@ -65,32 +65,32 @@ class NewTournamentView:
         nom = input("Nom :")
         while self.check_nom(nom) is not True and nom != constantes.ESCAPE:
             nom = input("Nom :")
-            if nom == constantes.ESCAPE:
-                return constantes.ESCAPE
+        if nom == constantes.ESCAPE:
+            return constantes.ESCAPE
 
         lieu = input("Lieu :")
         while self.check_lieu(lieu) is not True and lieu != constantes.ESCAPE:
             lieu = input("Lieu :")
-            if lieu == constantes.ESCAPE:
-                return constantes.ESCAPE
+        if lieu == constantes.ESCAPE:
+            return constantes.ESCAPE
 
         date_debut = input("Date de début :")
         while self.check_date_debut(date_debut) is not True and date_debut != constantes.ESCAPE:
             date_debut = input("Date de début :")
-            if date_debut == constantes.ESCAPE:
-                return constantes.ESCAPE
+        if date_debut == constantes.ESCAPE:
+            return constantes.ESCAPE
 
         date_fin = input("Date de fin :")
         while self.check_date_fin(date_fin) is not True and date_fin != constantes.ESCAPE:
-            if date_fin == constantes.ESCAPE:
-                return constantes.ESCAPE
             date_fin = input("Date de fin :")
+        if date_fin == constantes.ESCAPE:
+            return constantes.ESCAPE
 
         nombre_de_rounds = input("Nombre de rounds :")
-        while self.check_nombre_rounds(nombre_de_rounds) > 0 and date_fin != constantes.ESCAPE:
+        while self.check_nombre_rounds(nombre_de_rounds) < 1 and date_fin != constantes.ESCAPE:
             nombre_de_rounds = input("Nombre de rounds :")
-            if nombre_de_rounds == constantes.ESCAPE:
-                return constantes.ESCAPE
+        if nombre_de_rounds == constantes.ESCAPE:
+            return constantes.ESCAPE
 
         description = input("Description :")
         if description == constantes.ESCAPE:

@@ -30,9 +30,6 @@ class TournamentRoundsUpdateController:
             retour = rounds_view.update_score(tournoi)
             if retour == constantes.ESCAPE:
                 return constantes.ESCAPE
-            # controle des entrees
-            if self.check_scores(retour, tournoi) == "Non":
-                return "Non"
             if retour != constantes.ESCAPE:
                 indice_match = int(retour[0])-1
                 match = Match()
@@ -65,7 +62,7 @@ class TournamentRoundsUpdateController:
                         if (round_actuel+1) == tournoi.nombre_de_rounds:
                             if tournoi.rounds[round_actuel].est_fini:
                                 tournoi.en_cours = "Non"
-                                print("\nFIN DU MATCH !!!\nMerci de consulter le rapport de ce match !")
+                                rounds_view.print_info("\nFIN DU MATCH !!!")
                                 sleep(3)
 
                     # sauvegarde du tournoi
@@ -75,12 +72,12 @@ class TournamentRoundsUpdateController:
 
                     return tous_matchs_finis
                 else:
-                    print("Ce match est fini !")
+                    rounds_view.print_info("Ce match est fini !")
                     sleep(2)
                     return ("Non")
         # si le round actuel est fini
         else:
-            print("Pas de round actif !")
+            rounds_view.print_info("Pas de round actif !")
             sleep(2)
 
     def check_all_matchs_finished(self, round):

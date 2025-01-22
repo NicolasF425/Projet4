@@ -27,17 +27,20 @@ class RoundsView:
             print('\n')
 
     def update_score(self, tournoi):
-        print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
-        numero_match = input("Numero du match : ")
-        if numero_match == constantes.ESCAPE:
-            return constantes.ESCAPE
-        score_premier_joueur = input("Score premier joueur : ")
-        if score_premier_joueur == constantes.ESCAPE:
-            return constantes.ESCAPE
-        score_second_joueur = input("Score second joueur : ")
-        if score_second_joueur == constantes.ESCAPE:
-            return constantes.ESCAPE
-        liste_retour = [numero_match, score_premier_joueur, score_second_joueur]
+        ok = "Non"
+        while ok == "Non":
+            print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
+            numero_match = input("Numero du match : ")
+            if numero_match == constantes.ESCAPE:
+                return constantes.ESCAPE
+            score_premier_joueur = input("Score premier joueur : ")
+            if score_premier_joueur == constantes.ESCAPE:
+                return constantes.ESCAPE
+            score_second_joueur = input("Score second joueur : ")
+            if score_second_joueur == constantes.ESCAPE:
+                return constantes.ESCAPE
+            liste_retour = [numero_match, score_premier_joueur, score_second_joueur]
+            ok = self.check_scores(liste_retour, tournoi)
 
         return liste_retour
 
@@ -63,3 +66,7 @@ class RoundsView:
             print("Valeurs de scores incorrectes")
             sleep(2)
             return "Non"
+        return "Oui"
+
+    def print_info(self, info):
+        print(info)

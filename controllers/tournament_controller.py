@@ -176,10 +176,8 @@ class TournamentController:
         tournoi = Tournament()
         # Entree des infos nom, lieu, date debut et date fin,
         # nombre de rounds et description
-        next = False
-        while next is False:
-            view = NewTournamentView()
-            datas = view.param_tournament()
+        view = NewTournamentView()
+        datas = view.param_tournament()
         if datas == constantes.ESCAPE:
             return constantes.ESCAPE
         tournoi.nom = datas[0]
