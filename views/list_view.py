@@ -33,3 +33,6 @@ class ListView:
 
         for elements in listes_elements:
             self.print_line(elements, largeurs_colonnes)
+
+    def print_info(info):
+        print(info)

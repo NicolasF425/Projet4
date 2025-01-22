@@ -51,10 +51,10 @@ class TournamentController:
                             try:
                                 numero_tournoi_selectionne = int(numero_tournoi)
                             except ValueError:
-                                print("Veuillez entrer un nombre !")
+                                view.print_info("Veuillez entrer un nombre !")
                                 sleep(2)
             else:
-                print("Fichier des tournois non trouvé")
+                view.print_info("Fichier des tournois non trouvé")
                 sleep(2)
 
             # si un tournoi a été sélectionné, on affiche les données du tournoi et les actions possibles
@@ -79,32 +79,32 @@ class TournamentController:
                         controlleur = TournamentPlayersSelectionController()
                         controlleur.select_tournament_players(tournoi)
                     else:
-                        print("Tournoi commencé, modification de la liste des joueurs impossible !")
+                        view.print_info("Tournoi commencé, modification de la liste des joueurs impossible !")
                         sleep(2)
 
                 # 2> création d'un nouveau round
                 if choix_action == 2:
                     # si creation du premier round, lancement du tournoi
                     if tournoi.en_cours == "Non" and tournoi.round_actuel == 0:
-                        reponse = input("Initialiser le premier round ? Cela bloquera la liste des joueurs et "
-                                        "lancera le tournoi..."
-                                        + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
-                                        + "ou appuyez sur Entrée pour annuler : ")
+                        reponse = view.input_info("Initialiser le premier round ? Cela bloquera la liste des joueurs "
+                                                  + "et lancera le tournoi..."
+                                                  + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                                  + "ou appuyez sur Entrée pour annuler : ")
                         if reponse == "oui":
                             if len(tournoi.joueurs) > tournoi.nombre_de_rounds:
                                 tournoi.en_cours = "Oui"
                                 controlleur = RoundsController(tournoi)
                                 controlleur.init_round(1)
                             else:
-                                print("Pas assez de joueurs !")
+                                view.print_info("Pas assez de joueurs !")
                                 sleep(2)
 
                     # sinon creation d'un nouveau round
                     elif tournoi.en_cours == "Oui" and tournoi.round_actuel < tournoi.nombre_de_rounds and \
                                              tournoi.rounds[tournoi.round_actuel-1].est_fini == "Oui":
-                        reponse = input("Initialiser le prochain round ? "
-                                        + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
-                                        + "ou appuyez sur Entrée pour annuler : ")
+                        reponse = view.input_info("Initialiser le prochain round ? "
+                                                  + "\nTapez 'oui' puis appuyez sur Entrée pour valider "
+                                                  + "ou appuyez sur Entrée pour annuler : ")
                         if reponse == "oui":
                             controlleur = RoundsController(tournoi)
                             controlleur.init_round(tournoi.round_actuel+1)
@@ -117,7 +117,7 @@ class TournamentController:
                             controlleur = TournamentRoundsUpdateController()
                             reponse = controlleur.manage_rounds(tournoi)
                     else:
-                        print("Pas de scores à mettre à jour !")
+                        view.print_info("Pas de scores à mettre à jour !")
                         sleep(2)
 
         # Liste les tournois
@@ -156,13 +156,13 @@ class TournamentController:
                             rounds_view.print_rounds_matchs(liste_infos_rounds)
 
                         except ValueError:
-                            print("Vous devez entrer un nombre !")
+                            view.print_info("Vous devez entrer un nombre !")
                             sleep(2)
                         except Exception as err:
-                            print(f"Erreur {err} !")
+                            view.print_info(f"Erreur {err} !")
                             sleep(5)
             else:
-                print("Fichier des tournois non trouvé")
+                view.print_info("Fichier des tournois non trouvé")
                 sleep(2)
 
         # Retour

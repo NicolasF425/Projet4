@@ -38,3 +38,6 @@ class MenuView:
             print("Vous devez choisir une option de 1 à "+str(self.nb_elements))
             sleep(2)
             return False
+
+    def print_info(info):
+        print(info)

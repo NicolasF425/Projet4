@@ -85,7 +85,7 @@ class TournamentPlayersSelectionController:
                             j += 1
 
                 except ValueError:
-                    print("Vous devez entrer un numéro !")
+                    view.print_info("Vous devez entrer un numéro !")
                     sleep(2)
 
         # on met a jour le fichier des tournois

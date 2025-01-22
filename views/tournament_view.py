@@ -165,6 +165,9 @@ class ListTournamentsView(ListView):
             retour = input("\nSélectionner le tournoi numéro: ")
             return retour
 
+    def input_info(prompt):
+        return input(prompt)
+
 
 class PlayerSelectionView(ListView):
     '''Vue pour la selection des joueurs'''

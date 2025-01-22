@@ -23,7 +23,6 @@ class PlayerController:
 
         # Nouveau joueur
         if choix == 1:
-
             while True:
                 view = AddPlayerView()
                 player_datas = view.add_new_player()
@@ -45,7 +44,7 @@ class PlayerController:
                         listes_infos_joueurs.append(joueur.to_list())
                     view.list_players(listes_infos_joueurs)
             else:
-                print("Fichier des joueurs non trouvé")
+                view.print_info("Fichier des joueurs non trouvé")
                 sleep(2)
 
         # Retour

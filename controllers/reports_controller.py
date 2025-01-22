@@ -33,7 +33,7 @@ class ReportController:
                         listes_infos_joueurs.append(infos_joueur)
                     view.list_players(listes_infos_joueurs)
             else:
-                print("Fichier des joueurs non trouvé")
+                self.view.print_info("Fichier des joueurs non trouvé")
                 sleep(2)
 
         # liste des tournois
@@ -71,15 +71,14 @@ class ReportController:
                                 infos_round = round.to_list()
                                 liste_infos_rounds.append(infos_round)
                             rounds_view.print_rounds_matchs(liste_infos_rounds)
-
                         except ValueError:
-                            print("Vous devez entrer un nombre !")
+                            players_view.print_info("Vous devez entrer un nombre !")
                             sleep(2)
                         except Exception as err:
-                            print(f"Erreur {err} !")
+                            view.print_info(f"Erreur {err} !")
                             sleep(5)
             else:
-                print("Fichier des tournois non trouvé")
+                view.print_info("Fichier des tournois non trouvé")
                 sleep(2)
 
         # Retour
