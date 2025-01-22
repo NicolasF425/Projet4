@@ -45,13 +45,15 @@ class AddPlayerView:
                 return constantes.ESCAPE
 
         self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
-        while self.check_nom(self.date_de_naissance) is not True and self.date_de_naissance != constantes.ESCAPE:
+        while self.check_date_de_naissance(self.date_de_naissance) is not True and \
+                self.date_de_naissance != constantes.ESCAPE:
             self.date_de_naissance = input("Date de naissance (JJ/MM/AAAA) : ")
             if self.date_de_naissance == constantes.ESCAPE:
                 return constantes.ESCAPE
 
         self.identifiant_club = input("identifiant du club :")
-        while self.check_nom(self.identifiant_club) is not True and self.identifiant_club != constantes.ESCAPE:
+        while self.check_identifiant_club(self.identifiant_club) is not True and \
+                self.identifiant_club != constantes.ESCAPE:
             self.identifiant_club = input("identifiant du club :")
             if self.identifiant_club == constantes.ESCAPE:
                 return constantes.ESCAPE
