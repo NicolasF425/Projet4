@@ -1,5 +1,6 @@
 from utilities.clear_screen import clear_screen
 from utilities import constantes
+from time import sleep
 
 
 class RoundsView:
@@ -25,7 +26,7 @@ class RoundsView:
                 i += 1
             print('\n')
 
-    def update_score(self):
+    def update_score(self, tournoi):
         print("Mettre à jour un score (valeurs possible : 1 ou 0.5 ou 0)")
         numero_match = input("Numero du match : ")
         if numero_match == constantes.ESCAPE:
@@ -39,3 +40,26 @@ class RoundsView:
         liste_retour = [numero_match, score_premier_joueur, score_second_joueur]
 
         return liste_retour
+
+    def check_scores(self, retour, tournoi):
+        try:
+            # test si on a bien entré un nombre
+            int(retour[0])
+        except ValueError:
+            print("Vous devez entrer un numéro de match :")
+            sleep(2)
+            return "Non"
+        if int(retour[0]) > len(tournoi.rounds[tournoi.round_actuel-1].matchs):
+            print("Numéro de match incorrect !")
+            sleep(2)
+            return "Non"
+        if (retour[1] != "1" and retour[1] != "0.5" and retour[1] != "0" and retour[2] != "1" and retour[2] != "0.5"
+                and retour[2] != "0"):
+            print("Valeurs de scores incorrectes")
+            sleep(2)
+            return "Non"
+        total_scores = float(retour[1]) + float(retour[2])
+        if total_scores < 1 or total_scores > 1:
+            print("Valeurs de scores incorrectes")
+            sleep(2)
+            return "Non"

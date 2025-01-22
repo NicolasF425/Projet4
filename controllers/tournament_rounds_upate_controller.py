@@ -27,7 +27,7 @@ class TournamentRoundsUpdateController:
         # si le rounds actuel n'est pas fini
         # on propose l'affectation des scores
         if tournoi.rounds[round_actuel].est_fini == "Non":
-            retour = rounds_view.update_score()
+            retour = rounds_view.update_score(tournoi)
             if retour == constantes.ESCAPE:
                 return constantes.ESCAPE
             # controle des entrees
@@ -82,29 +82,6 @@ class TournamentRoundsUpdateController:
         else:
             print("Pas de round actif !")
             sleep(2)
-
-    def check_scores(self, retour, tournoi):
-        try:
-            # test si on a bien entré un nombre
-            int(retour[0])
-        except ValueError:
-            print("Vous devez entrer un numéro de match :")
-            sleep(2)
-            return "Non"
-        if int(retour[0]) > len(tournoi.rounds[tournoi.round_actuel-1].matchs):
-            print("Numéro de match incorrect !")
-            sleep(2)
-            return "Non"
-        if (retour[1] != "1" and retour[1] != "0.5" and retour[1] != "0" and retour[2] != "1" and retour[2] != "0.5"
-                and retour[2] != "0"):
-            print("Valeurs de scores incorrectes")
-            sleep(2)
-            return "Non"
-        total_scores = float(retour[1]) + float(retour[2])
-        if total_scores < 1 or total_scores > 1:
-            print("Valeurs de scores incorrectes")
-            sleep(2)
-            return "Non"
 
     def check_all_matchs_finished(self, round):
         '''Vérfie si tous les matchs du round en paramètre sont finis'''
